@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JobHunt · Find Jobs</title>
+    <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+    <div class="app-shell">
+        <?php require __DIR__ . '/../components/app-sidebar.php'; ?>
+        <main class="app-main">
+            <?php require __DIR__ . '/../components/topbar.php'; ?>
+            <div class="page-header">
+                <div class="kicker">Find jobs</div>
+                <h1>Find Your Next Opportunity</h1>
+            </div>
+            <div class="card" style="margin-bottom:18px;">
+                <div class="field-row">
+                    <input class="input" placeholder="Keyword" value="Product Designer" />
+                    <input class="input" placeholder="Location" value="Remote" />
+                    <button class="btn btn-primary" type="button">Search</button>
+                </div>
+            </div>
+            <div class="job-grid">
+                <?php foreach ($jobs as $job): ?>
+                    <article class="job-card">
+                        <div class="job-top">
+                            <div class="company-badge"><span class="company-logo" style="width:40px;height:40px;">C</span><?php echo htmlspecialchars($job['company']); ?></div>
+                            <span class="badge badge-primary"><?php echo htmlspecialchars($job['workplace']); ?></span>
+                        </div>
+                        <h3><?php echo htmlspecialchars($job['title']); ?></h3>
+                        <p class="muted"><?php echo htmlspecialchars($job['tagline']); ?></p>
+                        <div class="job-meta">
+                            <span><?php echo htmlspecialchars($job['location']); ?></span>
+                            <span><?php echo htmlspecialchars($job['salary']); ?></span>
+                        </div>
+                        <div class="skill-list">
+                            <?php foreach ($job['skills'] as $skill): ?>
+                                <span class="skill-tag"><?php echo htmlspecialchars($skill); ?></span>
+                            <?php endforeach; ?>
+                        </div>
+                        <div class="card-footer">
+                            <span class="muted"><?php echo htmlspecialchars($job['posted']); ?></span>
+                            <a class="btn btn-primary" href="index.php?page=job-details">Apply</a>
+                        </div>
+                    </article>
+                <?php endforeach; ?>
+            </div>
+        </main>
+    </div>
+    <script src="assets/js/app.js"></script>
+</body>
+</html>
