@@ -13,7 +13,7 @@
             <?php require __DIR__ . '/../components/topbar.php'; ?>
             <div class="page-header">
                 <div class="kicker">Candidate workspace</div>
-                <h1>Good morning, Alex.</h1>
+                <h1>Welcome back, <?php echo htmlspecialchars($_SESSION['user']['name'] ?? 'Candidate'); ?>.</h1>
                 <p class="muted">Here’s an overview of your job search activity.</p>
             </div>
             <div class="metrics-grid">
@@ -40,7 +40,7 @@
                                     <strong><?php echo htmlspecialchars($entry['position']); ?></strong><br>
                                     <span class="muted"><?php echo htmlspecialchars($entry['company']); ?></span>
                                 </div>
-                                <a class="btn btn-primary" href="index.php?page=job-details">View</a>
+                                <a class="btn btn-primary" href="index.php?page=job-details&amp;id=<?php echo (int) ($entry['job_id'] ?? 0); ?>">View</a>
                             </div>
                         <?php endforeach; ?>
                     </div>
@@ -48,13 +48,12 @@
                 <div class="card">
                     <div class="section-header">
                         <div>
-                            <div class="kicker">AI profile</div>
-                            <h2>Resume score</h2>
+                            <div class="kicker">Coming soon</div>
+                            <h2>AI resume optimizer</h2>
                         </div>
                     </div>
-                    <div class="value">92%</div>
-                    <p class="muted">Strong match for product and design roles.</p>
-                    <button class="btn btn-ai" type="button">Optimize CV</button>
+                    <p class="muted">Personalized resume feedback and AI-powered role matching will be available soon.</p>
+                    <button class="btn btn-ai" type="button" disabled aria-disabled="true">Available soon</button>
                 </div>
             </div>
             <div class="two-col" style="margin-top:24px;">
@@ -70,7 +69,7 @@
                                     <tr>
                                         <td><?php echo htmlspecialchars($app['company']); ?></td>
                                         <td><?php echo htmlspecialchars($app['position']); ?></td>
-                                        <td><span class="status-pill status-under-review"><?php echo htmlspecialchars($app['status']); ?></span></td>
+                                        <td><span class="status-pill"><?php echo htmlspecialchars($app['status']); ?></span></td>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
@@ -88,6 +87,7 @@
                             <span class="muted"><?php echo htmlspecialchars($item['time']); ?></span>
                         </div>
                     <?php endforeach; ?>
+                    <?php if (!$notifications): ?><p class="muted">You’re all caught up. New updates will appear here.</p><?php endif; ?>
                 </div>
             </div>
         </main>

@@ -16,11 +16,12 @@
                 <h1>Find Your Next Opportunity</h1>
             </div>
             <div class="card" style="margin-bottom:18px;">
-                <div class="field-row">
-                    <input class="input" placeholder="Keyword" value="Product Designer" />
-                    <input class="input" placeholder="Location" value="Remote" />
-                    <button class="btn btn-primary" type="button">Search</button>
-                </div>
+                <form class="field-row" method="get" action="index.php">
+                    <input type="hidden" name="page" value="candidate-jobs" />
+                    <input class="input" name="keyword" placeholder="Keyword" />
+                    <input class="input" name="location" placeholder="Location" />
+                    <button class="btn btn-primary" type="submit">Search</button>
+                </form>
             </div>
             <div class="job-grid">
                 <?php foreach ($jobs as $job): ?>
@@ -42,7 +43,7 @@
                         </div>
                         <div class="card-footer">
                             <span class="muted"><?php echo htmlspecialchars($job['posted']); ?></span>
-                            <a class="btn btn-primary" href="index.php?page=job-details">Apply</a>
+                            <a class="btn btn-primary" href="index.php?page=job-details&amp;id=<?php echo (int) $job['id']; ?>">View job</a>
                         </div>
                     </article>
                 <?php endforeach; ?>

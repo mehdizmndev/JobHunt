@@ -11,8 +11,9 @@
         <div class="auth-card">
             <div class="kicker">Account recovery</div>
             <h1>Reset your password</h1>
-            <form class="form-stack">
-                <input class="input" type="email" placeholder="Email address" value="alex@jobhunt.test" />
+            <form class="form-stack" method="post" action="index.php?page=forgot-password">
+                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrf_token); ?>" />
+                <label>Email address<input class="input" type="email" name="email" autocomplete="email" placeholder="you@example.com" required /></label>
                 <button class="btn btn-primary" type="submit">Send reset link</button>
                 <div class="help-text"><a href="index.php?page=signin" class="inline-link">Back to sign in</a></div>
             </form>

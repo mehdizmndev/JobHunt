@@ -18,13 +18,30 @@
             <div class="card">
                 <div class="table-wrap">
                     <table>
-                        <thead><tr><th>Candidate</th><th>Role</th><th>AI Match</th><th>Status</th></tr></thead>
+                        <thead><tr><th>Candidate</th><th>Role</th><th>Status</th><th>Update status</th></tr></thead>
                         <tbody>
-                            <tr><td>Alex Morgan</td><td>Senior Product Designer</td><td>92%</td><td><span class="status-pill status-shortlisted">Shortlisted</span></td></tr>
-                            <tr><td>Priya Nair</td><td>Frontend Engineer</td><td>88%</td><td><span class="status-pill status-under-review">Under Review</span></td></tr>
-                            <tr><td>Lucas Martin</td><td>Product Designer</td><td>84%</td><td><span class="status-pill status-interview">Interview</span></td></tr>
+                            <?php foreach ($candidates as $candidate): ?>
+                                <tr>
+                                    <td><?php echo htmlspecialchars($candidate['name']); ?></td>
+                                    <td><?php echo htmlspecialchars($candidate['role']); ?></td>
+                                    <td><?php echo htmlspecialchars(ucwords(str_replace('_', ' ', $candidate['status']))); ?></td>
+                                    <td>
+                                        <form method="post" action="index.php?page=company-candidates" class="inline-form">
+                                            <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrf_token); ?>" />
+                                            <input type="hidden" name="application_id" value="<?php echo (int) $candidate['id']; ?>" />
+                                            <select class="select" name="status" aria-label="Application status">
+                                                <?php foreach (['under_review', 'shortlisted', 'interview', 'accepted', 'rejected'] as $status): ?>
+                                                    <option value="<?php echo $status; ?>" <?php echo $candidate['status'] === $status ? 'selected' : ''; ?>><?php echo htmlspecialchars(ucwords(str_replace('_', ' ', $status))); ?></option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                            <button class="btn btn-secondary" type="submit">Save</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
+                    <?php if (!$candidates): ?><p class="muted" style="padding:16px;">No candidates have applied to your offers yet.</p><?php endif; ?>
                 </div>
             </div>
         </main>

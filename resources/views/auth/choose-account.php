@@ -12,8 +12,8 @@
             <div class="kicker">Get started</div>
             <h1>Choose your account type</h1>
             <div class="form-stack">
-                <a class="btn btn-secondary" href="index.php?page=register-candidate">Candidate account</a>
-                <a class="btn btn-secondary" href="index.php?page=register-company">Company account</a>
+                <a class="btn btn-secondary" href="index.php?page=register-candidate">Create a candidate account</a>
+                <a class="btn btn-secondary" href="index.php?page=register-company">Create a company account</a>
                 <div class="help-text">Already have an account? <a href="index.php?page=signin" class="inline-link">Sign in</a></div>
             </div>
         </div>

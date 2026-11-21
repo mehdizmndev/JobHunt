@@ -27,7 +27,7 @@
                                     <td><?php echo htmlspecialchars($item['company']); ?></td>
                                     <td><?php echo htmlspecialchars($item['position']); ?></td>
                                     <td><?php echo htmlspecialchars($item['date']); ?></td>
-                                    <td><span class="status-pill status-under-review"><?php echo htmlspecialchars($item['status']); ?></span></td>
+                                    <td><span class="status-pill"><?php echo htmlspecialchars(ucwords(str_replace('_', ' ', $item['status']))); ?></span></td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>

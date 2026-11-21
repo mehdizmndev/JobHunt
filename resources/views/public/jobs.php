@@ -5,19 +5,15 @@
             <div class="kicker">Discover roles</div>
             <h1>Find the right opportunity</h1>
         </div>
-        <div class="two-col">
+        <form class="card field-row" method="get" action="index.php">
+            <input type="hidden" name="page" value="jobs" />
+            <input class="input" name="keyword" placeholder="Job title, skill, or keyword" value="<?php echo htmlspecialchars($filters['keyword'] ?? ''); ?>" />
+            <input class="input" name="location" placeholder="Location" value="<?php echo htmlspecialchars($filters['location'] ?? ''); ?>" />
+            <button class="btn btn-primary" type="submit">Search</button>
+        </form>
+        <div class="two-col" style="margin-top:20px;">
             <div class="card">
-                <div class="field-row">
-                    <input class="input" placeholder="Job title, skill, or keyword" value="Product Designer" />
-                    <input class="input" placeholder="Location" value="Remote" />
-                    <button class="btn btn-primary" type="button">Search</button>
-                </div>
-                <div class="skill-list">
-                    <span class="skill-tag">Remote</span>
-                    <span class="skill-tag">Full-time</span>
-                    <span class="skill-tag">Senior</span>
-                </div>
-                <div class="job-grid">
+                <div class="job-grid job-grid-results">
                     <?php foreach ($jobs as $job): ?>
                         <article class="job-card">
                             <div class="job-top">
@@ -37,22 +33,40 @@
                             </div>
                             <div class="card-footer">
                                 <span class="muted"><?php echo htmlspecialchars($job['posted']); ?></span>
-                                <a class="btn btn-primary" href="index.php?page=job-details">Apply</a>
+                                <a class="btn btn-primary" href="index.php?page=job-details&amp;id=<?php echo (int) $job['id']; ?>">View job</a>
                             </div>
                         </article>
                     <?php endforeach; ?>
+                    <?php if (!$jobs): ?>
+                        <div class="card empty-state"><h3>No matching jobs yet</h3><p class="muted">Try another keyword or location, or clear your filters.</p></div>
+                    <?php endif; ?>
                 </div>
             </div>
             <aside class="card">
                 <h3>Filters</h3>
-                <div class="form-stack">
-                    <select class="select"><option>Job Category</option></select>
-                    <select class="select"><option>Employment Type</option></select>
-                    <select class="select"><option>Experience Level</option></select>
-                    <select class="select"><option>Salary Range</option></select>
-                    <select class="select"><option>Workplace Type</option></select>
-                    <button class="btn btn-secondary" type="button">Reset filters</button>
-                </div>
+                <form class="form-stack" method="get" action="index.php">
+                    <input type="hidden" name="page" value="jobs" />
+                    <input type="hidden" name="keyword" value="<?php echo htmlspecialchars($filters['keyword'] ?? ''); ?>" />
+                    <input type="hidden" name="location" value="<?php echo htmlspecialchars($filters['location'] ?? ''); ?>" />
+                    <label>Employment type
+                        <select class="select" name="employment_type">
+                            <option value="">All employment types</option>
+                            <?php foreach (['Full-time', 'Part-time', 'Contract', 'Internship'] as $type): ?>
+                                <option value="<?php echo htmlspecialchars($type); ?>" <?php echo ($filters['employment_type'] ?? '') === $type ? 'selected' : ''; ?>><?php echo htmlspecialchars($type); ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </label>
+                    <label>Workplace
+                        <select class="select" name="workplace_type">
+                            <option value="">Any workplace</option>
+                            <?php foreach (['Remote', 'Hybrid', 'On-site'] as $type): ?>
+                                <option value="<?php echo htmlspecialchars($type); ?>" <?php echo ($filters['workplace_type'] ?? '') === $type ? 'selected' : ''; ?>><?php echo htmlspecialchars($type); ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </label>
+                    <button class="btn btn-primary" type="submit">Apply filters</button>
+                    <a class="btn btn-secondary" href="index.php?page=jobs">Reset filters</a>
+                </form>
             </aside>
         </div>
     </div>

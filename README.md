@@ -1,32 +1,32 @@
 # JobHunt
 
-JobHunt is a PHP MVC recruitment SaaS prototype inspired by the provided Google Stitch design and product specification. The app includes a public marketing site, authentication flows, candidate workspace, company workspace, and admin workspace, all implemented with HTML/CSS/JavaScript and server-side PHP routing.
+JobHunt is a PHP and MySQL job board. It has a public site, candidate accounts, company accounts, and an admin area. AI tools are marked as coming soon.
 
-## Project structure
+## Run with XAMPP
 
-- `app/` — Controllers, models, and shared core classes
-- `config/` — environment and application configuration
-- `database/` — MySQL schema for the JobHunt relational model
-- `public/` — web entry point and static assets
-- `resources/views/` — HTML templates for all screens
-- `routes/` — route registration for the app
-
-## Run locally
-
-1. Start Apache and MySQL via XAMPP.
+1. Start Apache and MySQL.
 2. Import `database/jobhunt.sql` into MySQL.
-3. Open the app in a browser:
-   - `http://localhost/jobhunt/public/index.php?page=home`
+3. Check the database name, user, and password in `config/database.php`.
+4. Open `http://localhost/tests/jobhunt/public/index.php?page=home`.
+
+The app uses PHP 8.2 or newer. Password recovery needs PHP email (`mail()`) configured in XAMPP.
+
+## Main features
+
+- Create candidate and company accounts, sign in, and sign out.
+- Search jobs, save jobs, apply, and track applications.
+- Companies can publish jobs, review applicants, and update application status.
+- Candidates can edit their profile and upload PDF, DOC, or DOCX resumes.
+- Admins can manage users and job categories.
+- AI CV optimization, job matching, and screening are coming soon.
 
 ## Main pages
 
-- Public landing page: `index.php?page=home`
-- Job list: `index.php?page=jobs`
+- Home: `index.php?page=home`
+- Jobs: `index.php?page=jobs`
 - Sign in: `index.php?page=signin`
-- Candidate dashboard: `index.php?page=candidate-dashboard`
-- Company dashboard: `index.php?page=company-dashboard`
-- Admin dashboard: `index.php?page=admin-dashboard`
+- Candidate area: `index.php?page=candidate-dashboard`
+- Company area: `index.php?page=company-dashboard`
+- Admin area: `index.php?page=admin-dashboard`
 
-## Notes
-
-This prototype focuses on the design and product structure described by the JobHunt specification, while keeping the code modular and easy to extend.
+Three development demo accounts are already in the local database. Change their passwords before sharing or publishing the site.

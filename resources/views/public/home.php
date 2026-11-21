@@ -5,15 +5,15 @@
             <div>
                 <div class="kicker">JobHunt</div>
                 <h1>Find Your Next Opportunity. Build Your Future.</h1>
-                <p class="lead">Discover opportunities, improve your resume with AI, and connect with companies looking for talent.</p>
+                <p class="lead">Discover opportunities, build your profile, and connect with companies looking for talent. AI resume tools are coming soon.</p>
                 <div class="hero-actions">
                     <a class="btn btn-primary" href="index.php?page=jobs">Find Jobs</a>
                     <a class="btn btn-secondary" href="index.php?page=signin">Post a Job</a>
                 </div>
                 <div class="mini-stats">
-                    <div><strong>120k+</strong><br>Active job seekers</div>
-                    <div><strong>15k+</strong><br>Hiring teams</div>
-                    <div><strong>92%</strong><br>Resume score uplift</div>
+                    <div><strong><?php echo number_format($metrics['candidates']); ?></strong><br>Candidate accounts</div>
+                    <div><strong><?php echo number_format($metrics['companies']); ?></strong><br>Hiring teams</div>
+                    <div><strong><?php echo number_format($metrics['jobs']); ?></strong><br>Active job offers</div>
                 </div>
             </div>
             <div class="hero-preview">
@@ -24,26 +24,20 @@
                         <span class="dot"></span>
                     </div>
                     <div class="search-panel">
-                        <div class="field-row">
-                            <input class="input" placeholder="Job title or skill" value="Product Designer" />
-                            <input class="input" placeholder="Location" value="Remote" />
-                            <button class="btn btn-primary" type="button">Search</button>
-                        </div>
+                        <form class="field-row" method="get" action="index.php">
+                            <input type="hidden" name="page" value="jobs" />
+                            <input class="input" name="keyword" placeholder="Job title or skill" />
+                            <input class="input" name="location" placeholder="Location" />
+                            <button class="btn btn-primary" type="submit">Search</button>
+                        </form>
                         <div class="search-results">
-                            <div class="result-item">
-                                <div>
-                                    <strong>Senior Product Designer</strong><br>
-                                    <span class="muted">Northstar Labs</span>
-                                </div>
-                                <span class="badge badge-primary">Remote</span>
-                            </div>
-                            <div class="result-item">
-                                <div>
-                                    <strong>Frontend Engineer</strong><br>
-                                    <span class="muted">Asteria Cloud</span>
-                                </div>
-                                <span class="badge badge-success">Hybrid</span>
-                            </div>
+                            <?php foreach (array_slice($jobs, 0, 2) as $job): ?>
+                                <a class="result-item" href="index.php?page=job-details&amp;id=<?php echo (int) $job['id']; ?>">
+                                    <div><strong><?php echo htmlspecialchars($job['title']); ?></strong><br><span class="muted"><?php echo htmlspecialchars($job['company']); ?></span></div>
+                                    <span class="badge badge-primary"><?php echo htmlspecialchars($job['workplace']); ?></span>
+                                </a>
+                            <?php endforeach; ?>
+                            <?php if (!$jobs): ?><div class="result-item"><span class="muted">No jobs posted yet. Be the first team to publish one.</span></div><?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -63,7 +57,7 @@
                 <div class="card feature-card">
                     <div class="icon-box">1</div>
                     <h3>Create your profile</h3>
-                    <p class="muted">Build a strong employer-ready profile with experience, skills, and preferences.</p>
+                    <p class="muted">Build a clear candidate profile with your experience, skills, and preferences.</p>
                 </div>
                 <div class="card feature-card">
                     <div class="icon-box">2</div>
@@ -73,7 +67,7 @@
                 <div class="card feature-card">
                     <div class="icon-box">3</div>
                     <h3>Apply and track</h3>
-                    <p class="muted">Use Easy Apply, optimize your CV, and monitor every stage with confidence.</p>
+                    <p class="muted">Apply with your CV and track each application from your dashboard.</p>
                 </div>
             </div>
         </div>
@@ -89,14 +83,14 @@
             </div>
             <div class="grid-3">
                 <div class="card feature-card">
-                    <div class="icon-box">AI</div>
-                    <h3>Smart Job Search</h3>
-                    <p class="muted">Search by role, skills, location, salary, and match preferences.</p>
+                    <div class="icon-box">GO</div>
+                    <h3>Job Search</h3>
+                    <p class="muted">Search by title, category, location, employment type, and workplace.</p>
                 </div>
                 <div class="card feature-card">
                     <div class="icon-box">CV</div>
-                    <h3>AI CV Optimizer</h3>
-                    <p class="muted">Improve keyword alignment, clarity, and recruiter-readiness instantly.</p>
+                    <h3>AI CV Optimizer <span class="badge badge-purple">Coming soon</span></h3>
+                    <p class="muted">Personalized resume feedback will be available soon.</p>
                 </div>
                 <div class="card feature-card">
                     <div class="icon-box">✓</div>
@@ -111,20 +105,20 @@
         <div class="container">
             <div class="section-header">
                 <div>
-                    <span class="kicker">AI at work</span>
-                    <h2>Human decisions supported by transparent AI insights</h2>
+                    <span class="kicker">Coming soon</span>
+                    <h2>AI tools are in development</h2>
                 </div>
             </div>
-            <div class="grid-2" style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+            <div class="grid-2">
                 <div class="card">
                     <span class="badge badge-purple">Candidate Tools</span>
                     <h3 style="margin-top:18px;">CV optimization and role matching</h3>
-                    <p class="muted">Get guidance on skills, resume structure, and how a profile aligns to a given role without losing human control.</p>
+                    <p class="muted">Candidate AI features are being prepared and will be announced when available.</p>
                 </div>
                 <div class="card">
                     <span class="badge badge-primary">Company Tools</span>
-                    <h3 style="margin-top:18px;">AI CV screening and shortlisting</h3>
-                    <p class="muted">Review candidate fit using job-related criteria, not automated decisions alone, with recruiter oversight.</p>
+                    <h3 style="margin-top:18px;">AI candidate screening</h3>
+                    <p class="muted">Recruiter AI tools are being prepared; hiring decisions remain with people.</p>
                 </div>
             </div>
         </div>
@@ -143,7 +137,7 @@
                 <?php foreach (array_slice($jobs, 0, 3) as $job): ?>
                     <article class="job-card">
                         <div class="job-top">
-                            <div class="company-badge"><span class="company-logo" style="width:42px;height:42px;">N</span><?php echo htmlspecialchars($job['company']); ?></div>
+                            <div class="company-badge"><span class="company-logo" style="width:42px;height:42px;"><?php echo htmlspecialchars(strtoupper(substr($job['company'], 0, 1))); ?></span><?php echo htmlspecialchars($job['company']); ?></div>
                             <span class="badge badge-primary"><?php echo htmlspecialchars($job['type']); ?></span>
                         </div>
                         <h3><?php echo htmlspecialchars($job['title']); ?></h3>
@@ -159,7 +153,7 @@
                         </div>
                         <div class="card-footer">
                             <span class="muted"><?php echo htmlspecialchars($job['posted']); ?></span>
-                            <a class="btn btn-primary" href="index.php?page=job-details">View Job</a>
+                            <a class="btn btn-primary" href="index.php?page=job-details&amp;id=<?php echo (int) $job['id']; ?>">View Job</a>
                         </div>
                     </article>
                 <?php endforeach; ?>
@@ -178,28 +172,13 @@
             <div class="grid-4">
                 <?php foreach ($companies as $company): ?>
                     <div class="card company-card">
-                        <div class="company-logo"><?php echo strtoupper(substr($company['name'], 0, 2)); ?></div>
+                        <div class="company-logo"><?php echo htmlspecialchars(strtoupper(substr($company['name'], 0, 2))); ?></div>
                         <h3><?php echo htmlspecialchars($company['name']); ?></h3>
                         <p class="muted"><?php echo htmlspecialchars($company['industry']); ?></p>
                         <span class="badge badge-secondary" style="background:var(--surface-muted); color:var(--text-primary); margin-top:6px;"><?php echo htmlspecialchars($company['location']); ?></span>
+                        <p><a class="inline-link" href="index.php?page=company-profile&amp;id=<?php echo (int) $company['id']; ?>">View company</a></p>
                     </div>
                 <?php endforeach; ?>
-            </div>
-        </div>
-    </section>
-
-    <section class="section" style="background:#fff;">
-        <div class="container">
-            <div class="section-header">
-                <div>
-                    <span class="kicker">Testimonials</span>
-                    <h2>Job seekers and companies love the experience</h2>
-                </div>
-            </div>
-            <div class="grid-3">
-                <div class="card quote-card">“The guided workflow made it easy to move from profile building to interview requests.”</div>
-                <div class="card quote-card">“Our hiring team cut review time dramatically while keeping the final decision in human hands.”</div>
-                <div class="card quote-card">“The AI CV feedback helped me tailor applications without losing my voice.”</div>
             </div>
         </div>
     </section>

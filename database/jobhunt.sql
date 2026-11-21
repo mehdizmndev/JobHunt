@@ -8,6 +8,11 @@ CREATE TABLE roles (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+INSERT IGNORE INTO roles (name, description) VALUES
+('candidate', 'Job seeker account'),
+('company', 'Employer account'),
+('admin', 'Platform administrator');
+
 CREATE TABLE permissions (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL UNIQUE,
@@ -98,6 +103,13 @@ CREATE TABLE job_categories (
     description VARCHAR(255) DEFAULT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+INSERT IGNORE INTO job_categories (name) VALUES
+('Technology'),
+('Design'),
+('Marketing'),
+('Finance'),
+('Operations');
 
 CREATE TABLE skills (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -365,3 +377,19 @@ CREATE INDEX idx_users_email ON users(email);
 CREATE INDEX idx_job_offers_company ON job_offers(company_id, status);
 CREATE INDEX idx_applications_status ON applications(status, created_at);
 CREATE INDEX idx_messages_conversation ON messages(conversation_id, created_at);
+
+CREATE TABLE IF NOT EXISTS contact_messages (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    full_name VARCHAR(120) NOT NULL,
+    email VARCHAR(190) NOT NULL,
+    message TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS password_reset_tokens (
+    user_id INT PRIMARY KEY,
+    token_hash CHAR(64) NOT NULL,
+    expires_at DATETIME NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_reset_token_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

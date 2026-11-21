@@ -11,14 +11,16 @@
         <div class="auth-card">
             <div class="kicker">Candidate</div>
             <h1>Create your account</h1>
-            <form class="form-stack">
-                <input class="input" placeholder="Full name" value="Alex Morgan" />
-                <input class="input" type="email" placeholder="Email" value="alex@jobhunt.test" />
-                <input class="input" type="password" placeholder="Password" value="Password123!" />
-                <input class="input" type="password" placeholder="Confirm password" value="Password123!" />
-                <div class="checkbox-row"><input type="checkbox" checked /> <span>I accept the terms and privacy policy.</span></div>
+            <form class="form-stack" method="post" action="index.php?page=register-candidate">
+                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrf_token); ?>" />
+                <label>Full name<input class="input" name="full_name" autocomplete="name" placeholder="Your full name" required /></label>
+                <label>Email address<input class="input" type="email" name="email" autocomplete="email" placeholder="you@example.com" required /></label>
+                <label>Password<input class="input" type="password" name="password" autocomplete="new-password" minlength="10" required /></label>
+                <label>Confirm password<input class="input" type="password" name="password_confirmation" autocomplete="new-password" minlength="10" required /></label>
+                <label class="checkbox-row"><input type="checkbox" name="accept_terms" value="1" required /> <span>I accept the <a href="index.php?page=terms" class="inline-link">terms</a> and <a href="index.php?page=privacy" class="inline-link">privacy policy</a>.</span></label>
                 <button class="btn btn-primary" type="submit">Create account</button>
             </form>
+            <p class="help-text">Already registered? <a href="index.php?page=signin" class="inline-link">Sign in</a></p>
         </div>
     </div>
     <script src="assets/js/app.js"></script>

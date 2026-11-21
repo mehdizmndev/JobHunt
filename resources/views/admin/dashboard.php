@@ -44,10 +44,12 @@
                     </div>
                 </div>
                 <div class="card">
-                    <h3>Moderation queue</h3>
+                    <h3>Recently published jobs</h3>
                     <div class="list-stack">
-                        <div class="notification-item"><div><strong>Reported job offer</strong><br><span class="muted">Northstar Labs</span></div><span class="badge badge-warning">Pending</span></div>
-                        <div class="notification-item"><div><strong>Suspicious account</strong><br><span class="muted">3 flagged users</span></div><span class="badge badge-warning">Review</span></div>
+                        <?php foreach (array_slice($jobs, 0, 5) as $job): ?>
+                            <div class="notification-item"><div><strong><?php echo htmlspecialchars($job['title']); ?></strong><br><span class="muted"><?php echo htmlspecialchars($job['company']); ?></span></div><a class="inline-link" href="index.php?page=job-details&amp;id=<?php echo (int) $job['id']; ?>">View</a></div>
+                        <?php endforeach; ?>
+                        <?php if (!$jobs): ?><p class="muted">No active job offers yet.</p><?php endif; ?>
                     </div>
                 </div>
             </div>

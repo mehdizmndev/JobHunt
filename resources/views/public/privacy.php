@@ -3,7 +3,7 @@
     <div class="container card">
         <div class="kicker">Privacy Policy</div>
         <h1>Your data stays protected.</h1>
-        <p class="muted">JobHunt is built with privacy and security in mind. We use role-based access, encrypted storage for credentials, and explicit consent for data handling and AI-assisted recommendations.</p>
+        <p class="muted">JobHunt uses role-based access controls and password hashing. Resume files are stored outside the public web directory and served only to their owners. AI-assisted features are not currently available.</p>
     </div>
 </main>
 <?php require __DIR__ . '/../components/public-footer.php'; ?>

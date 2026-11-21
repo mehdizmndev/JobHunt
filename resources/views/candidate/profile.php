@@ -15,18 +15,20 @@
                 <div class="kicker">Profile</div>
                 <h1>My Profile</h1>
             </div>
-            <div class="card form-stack">
+            <form class="card form-stack" method="post" action="index.php?page=candidate-profile">
+                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrf_token); ?>" />
                 <div class="form-row">
-                    <input class="input" placeholder="Full name" value="Alex Morgan" />
-                    <input class="input" placeholder="Professional headline" value="Senior Product Designer" />
+                    <label>Full name<input class="input" name="full_name" value="<?php echo htmlspecialchars($profile['full_name'] ?? ''); ?>" required /></label>
+                    <label>Professional headline<input class="input" name="headline" value="<?php echo htmlspecialchars($profile['headline'] ?? ''); ?>" placeholder="e.g. Senior Product Designer" /></label>
                 </div>
-                <textarea class="textarea" rows="4" placeholder="Professional summary">Product designer with 6 years in SaaS, UX research, and design systems.</textarea>
+                <label>Professional summary<textarea class="textarea" name="professional_summary" rows="5" placeholder="Describe your experience and strengths."><?php echo htmlspecialchars($profile['professional_summary'] ?? ''); ?></textarea></label>
                 <div class="form-row">
-                    <input class="input" placeholder="Email" value="alex@jobhunt.test" />
-                    <input class="input" placeholder="Phone" value="+1 (415) 555-0123" />
+                    <label>Email<input class="input" type="email" value="<?php echo htmlspecialchars($profile['email'] ?? ''); ?>" disabled /></label>
+                    <label>Phone<input class="input" name="phone" value="<?php echo htmlspecialchars($profile['phone'] ?? ''); ?>" /></label>
                 </div>
-                <button class="btn btn-primary" type="button">Save profile</button>
-            </div>
+                <label>Location<input class="input" name="location" value="<?php echo htmlspecialchars($profile['location'] ?? ''); ?>" /></label>
+                <button class="btn btn-primary" type="submit">Save profile</button>
+            </form>
         </main>
     </div>
     <script src="assets/js/app.js"></script>

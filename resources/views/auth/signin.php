@@ -11,10 +11,10 @@
         <div class="auth-card">
             <div class="kicker">Welcome back</div>
             <h1>Sign in to JobHunt</h1>
-            <form class="form-stack">
-                <input class="input" type="email" placeholder="Email address" value="alex@jobhunt.test" />
-                <input class="input" type="password" placeholder="Password" value="password123" />
-                <div class="checkbox-row"><input type="checkbox" checked /> <span>Keep me signed in</span></div>
+            <form class="form-stack" method="post" action="index.php?page=signin">
+                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrf_token); ?>" />
+                <label>Email address<input class="input" type="email" name="email" autocomplete="email" placeholder="you@example.com" required /></label>
+                <label>Password<input class="input" type="password" name="password" autocomplete="current-password" placeholder="Your password" required /></label>
                 <button class="btn btn-primary" type="submit">Sign in</button>
                 <div class="help-text">Forgot password? <a href="index.php?page=forgot-password" class="inline-link">Reset it</a></div>
                 <div class="help-text">Not a member yet? <a href="index.php?page=account-type" class="inline-link">Create account</a></div>

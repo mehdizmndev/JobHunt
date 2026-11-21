@@ -8,13 +8,14 @@
         <div class="grid-4">
             <?php foreach ($companies as $company): ?>
                 <div class="card company-card">
-                    <div class="company-logo"><?php echo strtoupper(substr($company['name'], 0, 2)); ?></div>
+                    <div class="company-logo"><?php echo htmlspecialchars(strtoupper(substr($company['name'], 0, 2))); ?></div>
                     <h3><?php echo htmlspecialchars($company['name']); ?></h3>
                     <p class="muted"><?php echo htmlspecialchars($company['industry']); ?></p>
                     <p class="muted"><?php echo htmlspecialchars($company['location']); ?></p>
-                    <a class="btn btn-secondary" href="index.php?page=company-profile">View profile</a>
+                    <a class="btn btn-secondary" href="index.php?page=company-profile&amp;id=<?php echo (int) $company['id']; ?>">View profile</a>
                 </div>
             <?php endforeach; ?>
+            <?php if (!$companies): ?><div class="card empty-state"><h3>No companies listed yet</h3><p class="muted">Company profiles will appear here as teams join JobHunt.</p></div><?php endif; ?>
         </div>
     </div>
 </main>

@@ -18,18 +18,31 @@
             <div class="card">
                 <div class="table-wrap">
                     <table>
-                        <thead><tr><th>Title</th><th>Location</th><th>Applicants</th><th>Status</th></tr></thead>
+                        <thead><tr><th>Title</th><th>Location</th><th>Applicants</th><th>Status</th><th>Manage</th></tr></thead>
                         <tbody>
                             <?php foreach ($jobs as $job): ?>
                                 <tr>
                                     <td><?php echo htmlspecialchars($job['title']); ?></td>
                                     <td><?php echo htmlspecialchars($job['location']); ?></td>
-                                    <td>28</td>
-                                    <td><span class="status-pill status-active">Active</span></td>
+                                    <td><?php echo (int) $job['applicant_count']; ?></td>
+                                    <td><span class="status-pill status-<?php echo htmlspecialchars($job['status']); ?>"><?php echo htmlspecialchars(ucwords(str_replace('_', ' ', $job['status']))); ?></span></td>
+                                    <td>
+                                        <form method="post" action="index.php?page=company-jobs" class="inline-form">
+                                            <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrf_token); ?>" />
+                                            <input type="hidden" name="job_id" value="<?php echo (int) $job['id']; ?>" />
+                                            <select class="select" name="status" aria-label="Job status">
+                                                <?php foreach (['active', 'paused', 'closed'] as $status): ?>
+                                                    <option value="<?php echo $status; ?>" <?php echo $job['status'] === $status ? 'selected' : ''; ?>><?php echo ucfirst($status); ?></option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                            <button class="btn btn-secondary" type="submit">Save</button>
+                                        </form>
+                                    </td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
                     </table>
+                    <?php if (!$jobs): ?><p class="muted" style="padding:16px;">You have no job offers yet. <a class="inline-link" href="index.php?page=company-job-create">Create your first offer</a>.</p><?php endif; ?>
                 </div>
             </div>
         </main>

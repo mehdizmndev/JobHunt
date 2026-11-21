@@ -213,6 +213,7 @@ h2 {
 .muted { color: var(--text-secondary); }
 .grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
 .grid-4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
+.grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
 .card {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -359,16 +360,41 @@ th { background: var(--surface-muted); color: var(--text-secondary); font-size: 
 
 .list-stack { display: grid; gap: 14px; }
 .notification-item { display: flex; justify-content: space-between; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--border); }
+.notice {
+    margin: 18px auto;
+    padding: 14px 18px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--surface);
+    box-shadow: var(--shadow-soft);
+}
+.notice-success { border-color: rgba(22,163,74,.25); color: #166534; background: #f0fdf4; }
+.notice-error { border-color: rgba(220,38,38,.25); color: #991b1b; background: #fef2f2; }
+.notice-info { border-color: rgba(14,165,233,.25); color: #075985; background: #f0f9ff; }
+.inline-form { display: inline-flex; align-items: center; gap: 8px; }
+.inline-form .select { min-width: 150px; }
+.job-grid-results { grid-template-columns: 1fr; margin-top: 18px; }
+.empty-state { grid-column: 1 / -1; box-shadow: none; }
+button:disabled { cursor: not-allowed; opacity: .6; }
+label { display: grid; gap: 7px; color: var(--text-primary); font-size: .92rem; font-weight: 600; }
+.checkbox-row { display: flex; align-items: center; font-weight: 400; }
+.checkbox-row input { flex: 0 0 auto; }
 
 @media (max-width: 980px) {
     .hero-grid, .two-col, .grid-3, .grid-4, .job-grid, .footer-grid, .metrics-grid { grid-template-columns: 1fr 1fr; }
     .app-shell { grid-template-columns: 1fr; }
     .sidebar { border-right: none; border-bottom: 1px solid var(--border); }
+    .sidebar-nav { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
 }
 
 @media (max-width: 720px) {
     .nav-links, .header-actions .btn-secondary { display: none; }
-    .hero-grid, .grid-3, .grid-4, .job-grid, .metrics-grid, .two-col, .field-row, .form-row, .footer-grid { grid-template-columns: 1fr; }
+    .hero-grid, .grid-2, .grid-3, .grid-4, .job-grid, .metrics-grid, .two-col, .field-row, .form-row, .footer-grid { grid-template-columns: 1fr; }
     .cta-box { display: block; }
     .app-main { padding: 18px; }
+    .header-inner { min-height: 64px; }
+    .header-actions { flex-wrap: wrap; }
+    .metrics-grid { grid-template-columns: 1fr 1fr; }
+    .topbar { align-items: flex-start; flex-direction: column; }
+    .inline-form { align-items: stretch; flex-direction: column; }
 }

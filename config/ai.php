@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'enabled' => true,
+    'enabled' => false,
     'provider' => 'local-sandbox',
     'features' => [
         'cv_optimizer',

@@ -17,16 +17,22 @@
             </div>
             <div class="card">
                 <div class="list-stack">
-                    <div class="notification-item">
-                        <div><strong>Product Designer - Main CV</strong><br><span class="muted">Updated 2 weeks ago</span></div>
-                        <button class="btn btn-secondary" type="button">View</button>
-                    </div>
-                    <div class="notification-item">
-                        <div><strong>Design Portfolio Pack</strong><br><span class="muted">Uploaded 1 month ago</span></div>
-                        <button class="btn btn-secondary" type="button">Upload</button>
-                    </div>
+                    <?php foreach ($resumes as $resume): ?>
+                        <div class="notification-item">
+                            <div><strong><?php echo htmlspecialchars($resume['file_name']); ?></strong><br><span class="muted">Uploaded <?php echo htmlspecialchars(date('M j, Y', strtotime($resume['created_at']))); ?><?php echo $resume['is_primary'] ? ' · Primary resume' : ''; ?></span></div>
+                            <a class="btn btn-secondary" href="index.php?page=resume-download&amp;id=<?php echo (int) $resume['id']; ?>">Download</a>
+                        </div>
+                    <?php endforeach; ?>
+                    <?php if (!$resumes): ?><p class="muted">No resumes uploaded yet.</p><?php endif; ?>
                 </div>
-                <button class="btn btn-primary" type="button" style="margin-top:18px;">Upload new resume</button>
+                <form class="form-stack" method="post" action="index.php?page=candidate-resumes" enctype="multipart/form-data" style="margin-top:24px;">
+                    <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrf_token); ?>" />
+                    <label>Upload a resume (PDF, DOC, or DOCX; max 5 MB)
+                        <input class="input" type="file" name="resume" accept=".pdf,.doc,.docx" required />
+                    </label>
+                    <button class="btn btn-primary" type="submit">Upload resume</button>
+                </form>
+                <div class="notice notice-info" style="margin-top:18px;">AI resume optimization — Coming soon.</div>
             </div>
         </main>
     </div>
