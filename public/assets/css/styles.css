@@ -375,6 +375,10 @@ th { background: var(--surface-muted); color: var(--text-secondary); font-size: 
 .inline-form .select { min-width: 150px; }
 .job-grid-results { grid-template-columns: 1fr; margin-top: 18px; }
 .empty-state { grid-column: 1 / -1; box-shadow: none; }
+.legal-copy { max-width: 900px; }
+.legal-copy h2 { margin: 28px 0 8px; font-size: 1.25rem; }
+.legal-copy h2:first-child { margin-top: 0; }
+.legal-copy p { color: var(--text-secondary); }
 button:disabled { cursor: not-allowed; opacity: .6; }
 label { display: grid; gap: 7px; color: var(--text-primary); font-size: .92rem; font-weight: 600; }
 .checkbox-row { display: flex; align-items: center; font-weight: 400; }

@@ -641,6 +641,7 @@ class PageController extends Controller
             'metrics' => JobHuntData::adminMetrics(),
             'users' => array_slice(JobHuntData::allUsers(), 0, 5),
             'jobs' => JobHuntData::jobs(),
+            'messages' => JobHuntData::contactMessages(),
         ]);
     }
 

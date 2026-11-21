@@ -53,6 +53,26 @@
                     </div>
                 </div>
             </div>
+            <section class="card" style="margin-top:24px;">
+                <h2>Contact messages</h2>
+                <p class="muted">The 10 most recent messages sent through the public contact form.</p>
+                <?php if ($messages): ?>
+                    <div class="list-stack">
+                        <?php foreach ($messages as $message): ?>
+                            <article class="notification-item">
+                                <div>
+                                    <strong><?php echo htmlspecialchars($message['full_name']); ?></strong>
+                                    · <a class="inline-link" href="mailto:<?php echo htmlspecialchars($message['email']); ?>"><?php echo htmlspecialchars($message['email']); ?></a>
+                                    <p><?php echo nl2br(htmlspecialchars($message['message'])); ?></p>
+                                </div>
+                                <span class="help-text"><?php echo htmlspecialchars(date('M j, Y H:i', strtotime($message['created_at']))); ?></span>
+                            </article>
+                        <?php endforeach; ?>
+                    </div>
+                <?php else: ?>
+                    <p class="muted">No contact messages yet.</p>
+                <?php endif; ?>
+            </section>
         </main>
     </div>
     <script src="assets/js/app.js"></script>

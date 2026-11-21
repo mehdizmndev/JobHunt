@@ -256,6 +256,14 @@ class JobHuntData
         )->fetchAll();
     }
 
+    public static function contactMessages(): array
+    {
+        return Database::connection()->query(
+            'SELECT full_name, email, message, created_at
+             FROM contact_messages ORDER BY created_at DESC LIMIT 10'
+        )->fetchAll();
+    }
+
     public static function adminMetrics(): array
     {
         $db = Database::connection();

@@ -3,7 +3,8 @@
     <div class="container two-col">
         <div class="card">
             <div class="kicker">Contact</div>
-            <h1>We’d love to hear from you</h1>
+            <h1>Send us a message</h1>
+            <p class="muted">Questions or need help? Send a message and our JobHunt administrators will see it in their dashboard.</p>
             <form class="form-stack" method="post" action="index.php?page=contact">
                 <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrf_token); ?>" />
                 <label>Your name<input class="input" name="full_name" autocomplete="name" required /></label>
@@ -13,10 +14,9 @@
             </form>
         </div>
         <div class="card">
-            <h3>Support</h3>
-            <p class="muted">hello@jobhunt.io</p>
-            <p class="muted">+1 (415) 555-0130</p>
-            <p class="muted">San Francisco, CA</p>
+            <h3>What happens next?</h3>
+            <p class="muted">Your name, email, and message are saved so an administrator can review and respond to your request.</p>
+            <p class="help-text">Please do not include passwords or sensitive personal information in your message.</p>
         </div>
     </div>
 </main>
