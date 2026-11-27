@@ -18,6 +18,8 @@ return [
     'forgot-password' => 'auth.forgot-password',
     'reset-password' => 'auth.reset-password',
     'unauthorized' => 'auth.unauthorized',
+    'logout' => 'auth.logout',
+    'resume-download' => 'candidate.resume-download',
     'candidate-dashboard' => 'candidate.dashboard',
     'candidate-jobs' => 'candidate.jobs',
     'candidate-saved' => 'candidate.saved-jobs',

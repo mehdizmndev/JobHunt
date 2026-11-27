@@ -23,14 +23,20 @@ class PageController extends Controller
         }
 
         $role = $_SESSION['user']['role'] ?? '';
-        if (str_starts_with($page, 'candidate-') && $role !== 'candidate') {
-            $this->redirect('signin');
+        $needsCandidate = str_starts_with($page, 'candidate-') || $page === 'resume-download';
+        $needsCompany = $page !== 'company-profile' && str_starts_with($page, 'company-');
+        $needsAdmin = str_starts_with($page, 'admin-');
+
+        // Une page protegee renvoie vers la connexion si la session est absente,
+        // puis vers la page d'absence de permission si l'utilisateur est connecte avec un autre role.
+        if ($needsCandidate && $role !== 'candidate') {
+            $this->redirect($role === '' ? 'signin' : 'unauthorized');
         }
-        if ($page !== 'company-profile' && str_starts_with($page, 'company-') && $role !== 'company') {
-            $this->redirect('signin');
+        if ($needsCompany && $role !== 'company') {
+            $this->redirect($role === '' ? 'signin' : 'unauthorized');
         }
-        if (str_starts_with($page, 'admin-') && $role !== 'admin') {
-            $this->redirect('signin');
+        if ($needsAdmin && $role !== 'admin') {
+            $this->redirect($role === '' ? 'signin' : 'unauthorized');
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -77,6 +83,9 @@ class PageController extends Controller
                 break;
             case 'reset-password':
                 $this->render('auth.reset-password', ['token' => $_GET['token'] ?? '']);
+                break;
+            case 'unauthorized':
+                $this->render('auth.unauthorized');
                 break;
             case 'candidate-dashboard':
                 $this->candidateDashboard();
@@ -274,7 +283,7 @@ class PageController extends Controller
     private function resetPassword(): void
     {
         $password = $_POST['password'] ?? '';
-        if (strlen($password) < 10 || $password !== ($_POST['password_confirmation'] ?? '')) {
+        if (\strlen($password) < 10 || $password !== ($_POST['password_confirmation'] ?? '')) {
             $this->flash('Enter matching passwords with at least 10 characters.', 'error');
             $this->redirect('reset-password', ['token' => $_POST['token'] ?? '']);
         }
@@ -304,7 +313,7 @@ class PageController extends Controller
         $password = $_POST['password'] ?? '';
 
         if (!$name || !filter_var($email, FILTER_VALIDATE_EMAIL)
-            || strlen($password) < 10 || $password !== ($_POST['password_confirmation'] ?? '')
+            || \strlen($password) < 10 || $password !== ($_POST['password_confirmation'] ?? '')
             || empty($_POST['accept_terms'])) {
             $this->flash('Check your details, passwords, and agreement to the terms.', 'error');
             $this->redirect('register-' . $role);
@@ -433,7 +442,7 @@ class PageController extends Controller
 
     private function updateJobStatus(): void
     {
-        if (!in_array($_POST['status'] ?? '', ['active', 'paused', 'closed'], true)) {
+        if (!\in_array($_POST['status'] ?? '', ['active', 'paused', 'closed'], true)) {
             $this->flash('Choose a valid job status.', 'error');
             $this->redirect('company-jobs');
         }
@@ -448,7 +457,7 @@ class PageController extends Controller
 
     private function updateApplicationStatus(): void
     {
-        if (!in_array($_POST['status'] ?? '', ['under_review', 'shortlisted', 'interview', 'accepted', 'rejected'], true)) {
+        if (!\in_array($_POST['status'] ?? '', ['under_review', 'shortlisted', 'interview', 'accepted', 'rejected'], true)) {
             $this->flash('Choose a valid application status.', 'error');
             $this->redirect('company-candidates');
         }
@@ -553,7 +562,7 @@ class PageController extends Controller
 
     private function updateUserStatus(): void
     {
-        if (!in_array($_POST['status'] ?? '', ['active', 'suspended'], true)) {
+        if (!\in_array($_POST['status'] ?? '', ['active', 'suspended'], true)) {
             $this->flash('Choose a valid user status.', 'error');
             $this->redirect('admin-users');
         }
@@ -639,7 +648,7 @@ class PageController extends Controller
     {
         $this->render('admin.dashboard', [
             'metrics' => JobHuntData::adminMetrics(),
-            'users' => array_slice(JobHuntData::allUsers(), 0, 5),
+            'users' => \array_slice(JobHuntData::allUsers(), 0, 5),
             'jobs' => JobHuntData::jobs(),
             'messages' => JobHuntData::contactMessages(),
         ]);

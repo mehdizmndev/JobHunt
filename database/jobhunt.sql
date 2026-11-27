@@ -1,4 +1,5 @@
-CREATE DATABASE IF NOT EXISTS jobhunt CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+DROP DATABASE IF EXISTS jobhunt;
+CREATE DATABASE jobhunt CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE jobhunt;
 
 CREATE TABLE roles (
@@ -41,6 +42,16 @@ CREATE TABLE users (
     CONSTRAINT fk_users_role FOREIGN KEY (role_id) REFERENCES roles(id)
 );
 
+-- Comptes de demonstration pour tester les trois espaces de l'application.
+-- Les mots de passe sont volontairement documentes dans le README.
+INSERT INTO users (role_id, full_name, email, password_hash, status) VALUES
+((SELECT id FROM roles WHERE name = 'candidate'), 'Maya Candidate', 'candidate@jobhunt.test',
+ '$2y$10$YxXqkLvv9PQMjqWlsGL9WOhNhBqGJL6cQVxZLg4g.wi0W97xpZ7F.', 'active'),
+((SELECT id FROM roles WHERE name = 'company'), 'Alex Recruiter', 'company@jobhunt.test',
+ '$2y$10$S.sJcBHjkNyi25qP98ZSA.gwbyp13z2CXbld6uaOxrMw5cVCs3pCq', 'active'),
+((SELECT id FROM roles WHERE name = 'admin'), 'Jordan Admin', 'admin@jobhunt.test',
+ '$2y$10$PgbUBEi7EYMO24kVGdcikuDEonwVbBmanuysibpFkNgAGt.NuvmQe', 'active');
+
 CREATE TABLE user_profiles (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL UNIQUE,
@@ -68,6 +79,15 @@ CREATE TABLE candidate_profiles (
     CONSTRAINT fk_candidate_profile_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
+INSERT INTO candidate_profiles (user_id, headline, professional_summary, experience_level, preferred_location)
+SELECT id, 'Frontend developer', 'Candidate de demonstration ayant une experience web moderne.',
+       'mid', 'Remote'
+FROM users WHERE email = 'candidate@jobhunt.test';
+
+INSERT INTO user_profiles (user_id, phone, location)
+SELECT id, '+1 555 0100', 'Montreal, Canada'
+FROM users WHERE email = 'candidate@jobhunt.test';
+
 CREATE TABLE company_profiles (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL UNIQUE,
@@ -85,6 +105,13 @@ CREATE TABLE company_profiles (
     CONSTRAINT fk_company_profile_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
+INSERT INTO company_profiles
+(user_id, company_name, industry, company_size, founded_year, website, location, description, verification_status)
+SELECT id, 'Northstar Labs', 'Software', '51-200', 2018, 'https://example.com',
+       'Remote', 'Equipe logicielle de demonstration specialisee dans les produits numeriques.',
+       'verified'
+FROM users WHERE email = 'company@jobhunt.test';
+
 CREATE TABLE company_members (
     id INT AUTO_INCREMENT PRIMARY KEY,
     company_id INT NOT NULL,
@@ -96,6 +123,10 @@ CREATE TABLE company_members (
     CONSTRAINT fk_company_members_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     UNIQUE KEY uq_company_user (company_id, user_id)
 );
+
+INSERT INTO company_members (company_id, user_id, role, is_owner)
+SELECT c.id, c.user_id, 'owner', TRUE
+FROM company_profiles c;
 
 CREATE TABLE job_categories (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -118,6 +149,13 @@ CREATE TABLE skills (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_skills_category FOREIGN KEY (category_id) REFERENCES job_categories(id) ON DELETE SET NULL
 );
+
+INSERT IGNORE INTO skills (name, category_id) VALUES
+('PHP', (SELECT id FROM job_categories WHERE name = 'Technology')),
+('JavaScript', (SELECT id FROM job_categories WHERE name = 'Technology')),
+('MySQL', (SELECT id FROM job_categories WHERE name = 'Technology')),
+('UI/UX Design', (SELECT id FROM job_categories WHERE name = 'Design')),
+('Content Marketing', (SELECT id FROM job_categories WHERE name = 'Marketing'));
 
 CREATE TABLE job_offers (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -145,6 +183,36 @@ CREATE TABLE job_offers (
     CONSTRAINT fk_jobs_category FOREIGN KEY (category_id) REFERENCES job_categories(id)
 );
 
+INSERT INTO job_offers
+(company_id, category_id, title, summary, responsibilities, requirements, benefits,
+ employment_type, experience_level, workplace_type, location, salary_min, salary_max,
+ currency, status, published_at)
+SELECT c.id, cat.id, 'PHP Developer',
+       'Participer au developpement d applications web robustes.',
+       'Developper les fonctionnalites PHP; Maintenir les bases MySQL; Ecrire du code lisible.',
+       'PHP 8; PDO; Compréhension du HTML/CSS/JavaScript.',
+       'Teletravail; Horaires flexibles; Formation continue.',
+       'Full-time', 'Mid-level', 'Remote', 'Montreal, Canada', 65000, 85000,
+       'CAD', 'active', NOW()
+FROM company_profiles c
+JOIN job_categories cat ON cat.name = 'Technology'
+WHERE c.company_name = 'Northstar Labs';
+
+INSERT INTO job_offers
+(company_id, category_id, title, summary, responsibilities, requirements, benefits,
+ employment_type, experience_level, workplace_type, location, salary_min, salary_max,
+ currency, status, published_at)
+SELECT c.id, cat.id, 'Frontend Developer',
+       'Construire des interfaces accessibles et performantes.',
+       'Integre les maquettes; Optimiser les composants; Collaborer avec les equipes produit.',
+       'JavaScript; HTML; CSS; Bases de React utiles.',
+       'Remote; Budget formation; Assurance collective.',
+       'Full-time', 'Mid-level', 'Hybrid', 'Quebec, Canada', 60000, 78000,
+       'CAD', 'active', NOW()
+FROM company_profiles c
+JOIN job_categories cat ON cat.name = 'Technology'
+WHERE c.company_name = 'Northstar Labs';
+
 CREATE TABLE job_skills (
     job_id INT NOT NULL,
     skill_id INT NOT NULL,
@@ -153,6 +221,18 @@ CREATE TABLE job_skills (
     CONSTRAINT fk_job_skills_job FOREIGN KEY (job_id) REFERENCES job_offers(id) ON DELETE CASCADE,
     CONSTRAINT fk_job_skills_skill FOREIGN KEY (skill_id) REFERENCES skills(id) ON DELETE CASCADE
 );
+
+INSERT INTO job_skills (job_id, skill_id)
+SELECT j.id, s.id
+FROM job_offers j
+JOIN skills s ON s.name IN ('PHP', 'JavaScript', 'MySQL')
+WHERE j.title = 'PHP Developer';
+
+INSERT INTO job_skills (job_id, skill_id)
+SELECT j.id, s.id
+FROM job_offers j
+JOIN skills s ON s.name IN ('JavaScript', 'UI/UX Design')
+WHERE j.title = 'Frontend Developer';
 
 CREATE TABLE resumes (
     id INT AUTO_INCREMENT PRIMARY KEY,
