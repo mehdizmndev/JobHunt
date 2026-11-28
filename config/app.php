@@ -2,7 +2,6 @@
 // Ce fichier contient la configuration simple de JobHunt.
 
 // Charge simplement les variables du fichier .env lorsqu'elles existent.
-// Cette methode reste volontairement legere pour garder le projet facile a comprendre.
 $envFile = dirname(__DIR__) . '/.env';
 
 // Cette fonction echappe les informations avant leur affichage dans une page HTML.
