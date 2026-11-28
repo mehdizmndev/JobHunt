@@ -1,25 +1,35 @@
 // Ce fichier gere les interactions simples, les animations, les formulaires et le theme sombre.
 document.addEventListener('DOMContentLoaded', function () {
-    const themeButton = document.createElement('button');
-    themeButton.type = 'button';
-    themeButton.className = 'theme-toggle';
-    themeButton.setAttribute('aria-label', 'Changer de theme');
-    document.body.appendChild(themeButton);
-
     const savedTheme = localStorage.getItem('jobhunt-theme');
     const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     const firstTheme = savedTheme || (systemDark ? 'dark' : 'light');
+    let themeButton = document.querySelector('[data-theme-toggle]');
+
+    if (!themeButton) {
+        const authCard = document.querySelector('.auth-card');
+        if (authCard) {
+            const themeSlot = document.createElement('div');
+            themeSlot.className = 'auth-theme-slot';
+            themeSlot.innerHTML = '<button class="theme-toggle" type="button" data-theme-toggle aria-label="Changer de theme"></button>';
+            authCard.insertBefore(themeSlot, authCard.firstChild);
+            themeButton = themeSlot.querySelector('[data-theme-toggle]');
+        }
+    }
 
     function applyTheme(theme) {
         document.body.dataset.theme = theme;
         localStorage.setItem('jobhunt-theme', theme);
-        themeButton.innerHTML = theme === 'dark' ? '☀️' : '🌙';
-        themeButton.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
+        document.querySelectorAll('[data-theme-toggle]').forEach(function (button) {
+            button.innerHTML = theme === 'dark' ? '☀️' : '🌙';
+            button.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
+        });
     }
 
     applyTheme(firstTheme);
-    themeButton.addEventListener('click', function () {
-        applyTheme(document.body.dataset.theme === 'dark' ? 'light' : 'dark');
+    document.querySelectorAll('[data-theme-toggle]').forEach(function (button) {
+        button.addEventListener('click', function () {
+            applyTheme(document.body.dataset.theme === 'dark' ? 'light' : 'dark');
+        });
     });
 
     document.querySelectorAll('form').forEach(function (form) {

@@ -9,5 +9,6 @@
             <input type="hidden" name="csrf_token" value="<?php echo h($_SESSION['csrf_token'] ?? ''); ?>" />
             <button class="btn btn-secondary" type="submit">Sign out</button>
         </form>
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Changer de theme"></button>
     </div>
 </div>

@@ -563,12 +563,9 @@ body[data-theme="dark"] .notice-error {
 }
 
 .theme-toggle {
-    position: fixed;
-    right: 18px;
-    bottom: 18px;
-    z-index: 100;
-    width: 48px;
-    height: 48px;
+    width: 44px;
+    height: 44px;
+    flex: 0 0 44px;
     border: 1px solid var(--border);
     border-radius: 50%;
     background: var(--surface);
@@ -581,6 +578,16 @@ body[data-theme="dark"] .notice-error {
 .theme-toggle:hover {
     transform: translateY(-3px) rotate(5deg);
     box-shadow: 0 16px 34px rgba(37, 99, 235, .28);
+}
+
+.auth-card {
+    position: relative;
+}
+
+.auth-theme-slot {
+    position: absolute;
+    top: 18px;
+    right: 18px;
 }
 
 .card,
