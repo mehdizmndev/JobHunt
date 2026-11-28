@@ -13,7 +13,7 @@
         <div class="header-actions">
             <a class="btn btn-secondary" href="index.php?page=signin">Sign In</a>
             <a class="btn btn-primary" href="index.php?page=account-type">Get Started</a>
-            <button class="theme-toggle" type="button" data-theme-toggle aria-label="Changer de theme"></button>
+            <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle dark mode" title="Toggle dark mode"></button>
         </div>
     </div>
 </header>

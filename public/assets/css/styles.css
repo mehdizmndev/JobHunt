@@ -306,6 +306,7 @@ h2 {
 .copyright { margin-top: 28px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,0.1); }
 
 .auth-shell {
+    position: relative;
     min-height: 100vh;
     display: grid;
     place-items: center;
@@ -529,11 +530,16 @@ body[data-theme="dark"] .site-header,
 body[data-theme="dark"] .sidebar,
 body[data-theme="dark"] .topbar,
 body[data-theme="dark"] .auth-card,
+body[data-theme="dark"] .auth-shell,
 body[data-theme="dark"] .about-hero,
 body[data-theme="dark"] .about-path,
 body[data-theme="dark"] .result-item,
 body[data-theme="dark"] .preview-window {
     background: var(--surface);
+}
+
+body[data-theme="dark"] .auth-shell {
+    background: linear-gradient(135deg, #07111F, #101D32);
 }
 
 body[data-theme="dark"] .section[style*="#fff"] {
@@ -573,6 +579,12 @@ body[data-theme="dark"] .notice-error {
     box-shadow: 0 12px 30px rgba(15, 23, 42, .18);
     cursor: pointer;
     transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease;
+}
+
+.auth-theme-toggle {
+    position: absolute;
+    top: 24px;
+    right: 24px;
 }
 
 .theme-toggle:hover {

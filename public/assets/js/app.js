@@ -3,17 +3,16 @@ document.addEventListener('DOMContentLoaded', function () {
     const savedTheme = localStorage.getItem('jobhunt-theme');
     const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     const firstTheme = savedTheme || (systemDark ? 'dark' : 'light');
-    let themeButton = document.querySelector('[data-theme-toggle]');
 
-    if (!themeButton) {
-        const authCard = document.querySelector('.auth-card');
-        if (authCard) {
-            const themeSlot = document.createElement('div');
-            themeSlot.className = 'auth-theme-slot';
-            themeSlot.innerHTML = '<button class="theme-toggle" type="button" data-theme-toggle aria-label="Changer de theme"></button>';
-            authCard.insertBefore(themeSlot, authCard.firstChild);
-            themeButton = themeSlot.querySelector('[data-theme-toggle]');
-        }
+    // Les pages d'authentification n'ont pas d'en-tete : place le bouton en haut a droite.
+    if (!document.querySelector('[data-theme-toggle]')) {
+        const themeButton = document.createElement('button');
+        themeButton.type = 'button';
+        themeButton.className = 'theme-toggle auth-theme-toggle';
+        themeButton.setAttribute('data-theme-toggle', '');
+        themeButton.setAttribute('aria-label', 'Toggle dark mode');
+        themeButton.setAttribute('title', 'Toggle dark mode');
+        document.querySelector('.auth-shell').appendChild(themeButton);
     }
 
     function applyTheme(theme) {

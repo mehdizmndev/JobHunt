@@ -5,6 +5,12 @@ namespace App\Core;
 
 class Controller
 {
+    // Cette methode retourne l'identifiant du compte ouvert dans la session.
+    protected function userId(): int
+    {
+        return (int) ($_SESSION['user']['id'] ?? 0);
+    }
+
     protected function redirect(string $page, array $query = []): void
     {
         $query = ['page' => $page] + $query;
@@ -48,12 +54,12 @@ class Controller
 
         if (str_starts_with($view, 'public.')) {
             $title = h($data['page_title'] ?? 'JobHunt · Find your next opportunity', ENT_QUOTES, 'UTF-8');
-            echo '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>' . $title . '</title><link rel="stylesheet" href="assets/css/styles.css"></head><body>';
+            echo '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>' . $title . '</title><link rel="stylesheet" href="assets/css/styles.css?v=auth-bg-1"></head><body>';
             if ($flash_message) {
                 echo '<div class="container"><div class="notice notice-' . h($flash_message['type'], ENT_QUOTES, 'UTF-8') . '">' . h($flash_message['message'], ENT_QUOTES, 'UTF-8') . '</div></div>';
             }
             require $viewPath;
-            echo '<script src="assets/js/app.js"></script></body></html>';
+            echo '<script src="assets/js/app.js?v=theme-top-2"></script></body></html>';
             return;
         }
 

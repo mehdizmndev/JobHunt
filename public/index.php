@@ -5,6 +5,10 @@ require dirname(__DIR__) . '/config/app.php';
 require dirname(__DIR__) . '/app/Core/Controller.php';
 require dirname(__DIR__) . '/app/Core/Database.php';
 require dirname(__DIR__) . '/app/Models/JobHuntData.php';
+require dirname(__DIR__) . '/app/Controllers/AuthController.php';
+require dirname(__DIR__) . '/app/Controllers/CandidateController.php';
+require dirname(__DIR__) . '/app/Controllers/CompanyController.php';
+require dirname(__DIR__) . '/app/Controllers/AdminController.php';
 require dirname(__DIR__) . '/app/Controllers/PageController.php';
 
 use App\Controllers\PageController;

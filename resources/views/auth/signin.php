@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>JobHunt · Sign In</title>
-    <link rel="stylesheet" href="assets/css/styles.css" />
+    <link rel="stylesheet" href="assets/css/styles.css?v=auth-bg-1" />
 </head>
 <body>
     <div class="auth-shell">
@@ -20,6 +20,6 @@
             </form>
         </div>
     </div>
-    <script src="assets/js/app.js"></script>
+    <script src="assets/js/app.js?v=theme-top-2"></script>
 </body>
 </html>
