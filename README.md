@@ -142,12 +142,6 @@ Ces comptes sont prevus pour le developpement et les demonstrations locales. Cha
 
 ## Tester l'installation
 
-Verifier la syntaxe PHP :
-
-```powershell
-Get-ChildItem -Recurse -Filter *.php | ForEach-Object { & C:\xampp\php\php.exe -l $_.FullName }
-```
-
 Verifier la base, les comptes et les offres apres l'import :
 
 ```powershell
