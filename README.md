@@ -129,7 +129,7 @@ Ces comptes sont prevus pour le developpement et les demonstrations locales. Cha
 
 ## Structure
 
-- `app/Controllers/` : `PageController.php` dirige les pages ; `AuthController.php`, `CandidateController.php`, `CompanyController.php` et `AdminController.php` s'occupent chacun de leur espace.
+- `app/Controllers/` : `PageController.php` choisit la page ; `AuthController.php` gere la connexion et les inscriptions ; les autres controleurs regroupent les pages candidat, entreprise et admin.
 - `app/Core/` : connexion PDO et rendu des vues.
 - `app/Models/` : lectures de donnees simples.
 - `config/` : configuration locale de l'application et de la base.

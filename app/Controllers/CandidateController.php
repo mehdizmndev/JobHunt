@@ -56,14 +56,16 @@ class CandidateController extends Controller
     // Cette methode verifie le CV et ajoute la candidature a la base.
     public function apply(): void
     {
+        // Seul un candidat connecte peut envoyer une candidature.
         if (($_SESSION['user']['role'] ?? '') !== 'candidate') {
             $this->flash('Sign in as a candidate to apply.', 'error');
             $this->redirect('signin');
         }
 
         $db = Database::connection();
-        $resumeId = $_POST['resume_id'] ?: null;
+        $resumeId = $_POST['resume_id'] ?? null;
 
+        // Le CV choisi doit appartenir au candidat connecte.
         if ($resumeId) {
             $query = $db->prepare('SELECT id FROM resumes WHERE id = ? AND user_id = ?');
             $query->execute([$resumeId, $this->userId()]);
@@ -73,6 +75,7 @@ class CandidateController extends Controller
             }
         }
 
+        // La base refuse une deuxieme candidature pour la meme offre.
         try {
             $query = $db->prepare(
                 "INSERT INTO applications (user_id, job_id, resume_id, cover_letter)
@@ -114,14 +117,13 @@ class CandidateController extends Controller
         $name = $_POST['full_name'] ?? '';
 
         $db->prepare('UPDATE users SET full_name = ? WHERE id = ?')->execute([$name, $userId]);
+        // Les deux profils sont crees pendant l'inscription, on peut les modifier directement.
         $db->prepare(
-            'INSERT INTO candidate_profiles (user_id, headline, professional_summary) VALUES (?, ?, ?)
-             ON DUPLICATE KEY UPDATE headline = VALUES(headline), professional_summary = VALUES(professional_summary)'
-        )->execute([$userId, $_POST['headline'] ?? '', $_POST['professional_summary'] ?? '']);
+            'UPDATE candidate_profiles SET headline = ?, professional_summary = ? WHERE user_id = ?'
+        )->execute([$_POST['headline'] ?? '', $_POST['professional_summary'] ?? '', $userId]);
         $db->prepare(
-            'INSERT INTO user_profiles (user_id, phone, location) VALUES (?, ?, ?)
-             ON DUPLICATE KEY UPDATE phone = VALUES(phone), location = VALUES(location)'
-        )->execute([$userId, $_POST['phone'] ?? '', $_POST['location'] ?? '']);
+            'UPDATE user_profiles SET phone = ?, location = ? WHERE user_id = ?'
+        )->execute([$_POST['phone'] ?? '', $_POST['location'] ?? '', $userId]);
 
         $_SESSION['user']['name'] = $name;
         $this->flash('Profile saved.');
@@ -131,6 +133,7 @@ class CandidateController extends Controller
     // Cette methode verifie le type du fichier avant de sauvegarder le CV en prive.
     public function uploadResume(): void
     {
+        // La taille et le type empechent d'enregistrer un fichier qui n'est pas un CV accepte.
         $file = $_FILES['resume'] ?? null;
         if (!$file || $file['error'] !== UPLOAD_ERR_OK || $file['size'] > 5 * 1024 * 1024) {
             $this->flash('Choose a resume file smaller than 5 MB.', 'error');
@@ -148,6 +151,7 @@ class CandidateController extends Controller
             $this->redirect('candidate-resumes');
         }
 
+        // Les CV restent hors du dossier public du site.
         $folder = dirname(__DIR__, 2) . '/storage/private/resumes';
         if (!is_dir($folder)) {
             mkdir($folder, 0750, true);
@@ -168,6 +172,7 @@ class CandidateController extends Controller
     // Cette methode telecharge un CV appartenant au candidat connecte.
     public function downloadResume(): void
     {
+        // On cherche le fichier avec l'identifiant du candidat pour proteger les CV personnels.
         $query = Database::connection()->prepare(
             'SELECT file_name, file_path, file_type FROM resumes WHERE id = ? AND user_id = ?'
         );

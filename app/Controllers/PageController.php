@@ -29,6 +29,7 @@ class PageController extends Controller
         session_start();
         $this->auth->checkAccount();
 
+        // On bloque les formulaires qui ne contiennent pas le jeton de la session.
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$this->verifyCsrf()) {
             $this->flash('Your session expired. Please try again.', 'error');
             $this->redirect($page);
@@ -38,32 +39,37 @@ class PageController extends Controller
             $this->redirect('home');
         }
 
+        // On verifie le role avant d'afficher ou modifier des donnees privees.
         $this->checkPageAccess($page);
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $this->handleForm($page);
         }
 
-        // Ces pages ne demandent aucune donnee supplementaire.
-        $simplePages = [
-            'about' => 'public.about',
-            'contact' => 'public.contact',
-            'help' => 'public.help',
-            'privacy' => 'public.privacy',
-            'terms' => 'public.terms',
-            'signin' => 'auth.signin',
-            'account-type' => 'auth.choose-account',
-            'register-candidate' => 'auth.candidate-register',
-            'register-company' => 'auth.company-register',
-            'unauthorized' => 'auth.unauthorized',
-        ];
-        if (isset($simplePages[$page])) {
-            $this->render($simplePages[$page]);
-            return;
-        }
-
-        // Ces pages chargent les donnees utiles avant d'afficher leur vue.
+        // Le switch choisit une vue selon le nom de page recu dans l'URL.
         switch ($page) {
+            case 'about':
+            case 'contact':
+            case 'help':
+            case 'privacy':
+            case 'terms':
+                $this->render('public.' . $page);
+                break;
+            case 'signin':
+                $this->render('auth.signin');
+                break;
+            case 'account-type':
+                $this->render('auth.choose-account');
+                break;
+            case 'register-candidate':
+                $this->render('auth.candidate-register');
+                break;
+            case 'register-company':
+                $this->render('auth.company-register');
+                break;
+            case 'unauthorized':
+                $this->render('auth.unauthorized');
+                break;
             case 'jobs':
                 $this->render('public.jobs', [
                     'jobs' => JobHuntData::jobs($_GET),

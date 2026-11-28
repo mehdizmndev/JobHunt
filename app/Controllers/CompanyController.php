@@ -49,6 +49,8 @@ class CompanyController extends Controller
     public function createJob(): void
     {
         $db = Database::connection();
+
+        // On retrouve l'entreprise et la categorie choisies dans les listes.
         $query = $db->prepare('SELECT id FROM company_profiles WHERE user_id = ?');
         $query->execute([$this->userId()]);
         $companyId = $query->fetchColumn();
@@ -57,11 +59,13 @@ class CompanyController extends Controller
         $query->execute([$_POST['category'] ?? '']);
         $categoryId = $query->fetchColumn();
 
+        // Une offre a besoin d'une entreprise, d'une categorie, d'un titre et d'un resume.
         if (!$companyId || !$categoryId || empty($_POST['title']) || empty($_POST['summary'])) {
             $this->flash('Enter a title, description, and category for your job.', 'error');
             $this->redirect('company-job-create');
         }
 
+        // On enregistre l'offre avec le statut active.
         $query = $db->prepare(
             "INSERT INTO job_offers
             (company_id, category_id, title, summary, requirements, responsibilities, employment_type,
@@ -90,12 +94,14 @@ class CompanyController extends Controller
     // Cette methode change le statut d'une offre appartenant a l'entreprise.
     public function updateJobStatus(): void
     {
+        // L'entreprise ne peut choisir que ces trois etats.
         $status = $_POST['status'] ?? '';
         if (!\in_array($status, ['active', 'paused', 'closed'], true)) {
             $this->flash('Choose a valid job status.', 'error');
             $this->redirect('company-jobs');
         }
 
+        // La requete verifie aussi que l'offre appartient a cette entreprise.
         $query = Database::connection()->prepare(
             'UPDATE job_offers j JOIN company_profiles c ON c.id = j.company_id
              SET j.status = ? WHERE j.id = ? AND c.user_id = ?'
@@ -108,6 +114,7 @@ class CompanyController extends Controller
     // Cette methode change le statut d'une candidature recue par l'entreprise.
     public function updateApplicationStatus(): void
     {
+        // L'entreprise peut faire avancer ou terminer le suivi d'une candidature.
         $status = $_POST['status'] ?? '';
         $allowedStatuses = ['under_review', 'shortlisted', 'interview', 'accepted', 'rejected'];
         if (!\in_array($status, $allowedStatuses, true)) {
@@ -115,6 +122,7 @@ class CompanyController extends Controller
             $this->redirect('company-candidates');
         }
 
+        // La requete ne modifie que les candidatures de cette entreprise.
         $query = Database::connection()->prepare(
             'UPDATE applications a JOIN job_offers j ON j.id = a.job_id
              JOIN company_profiles c ON c.id = j.company_id

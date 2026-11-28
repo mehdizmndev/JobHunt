@@ -38,6 +38,7 @@ class AdminController extends Controller
     // Cette methode active ou suspend un compte utilisateur.
     public function updateUserStatus(): void
     {
+        // Le formulaire ne peut choisir qu'un de ces deux etats.
         $status = $_POST['status'] ?? '';
         if (!\in_array($status, ['active', 'suspended'], true)) {
             $this->flash('Choose a valid user status.', 'error');
@@ -53,6 +54,7 @@ class AdminController extends Controller
     // Cette methode ajoute une categorie d'offres si son nom est renseigne.
     public function createCategory(): void
     {
+        // Le nom est obligatoire pour creer une categorie.
         $name = trim($_POST['name'] ?? '');
         if ($name === '') {
             $this->flash('Enter a category name.', 'error');

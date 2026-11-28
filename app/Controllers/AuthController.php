@@ -28,6 +28,7 @@ class AuthController extends Controller
     // Cette methode verifie le mot de passe puis ouvre la session.
     public function signIn(): void
     {
+        // On cherche le compte avec son adresse courriel.
         $query = Database::connection()->prepare(
             'SELECT u.id, u.full_name, u.email, u.password_hash, u.status, r.name AS role
              FROM users u JOIN roles r ON r.id = u.role_id WHERE u.email = ?'
@@ -35,11 +36,13 @@ class AuthController extends Controller
         $query->execute([strtolower(trim($_POST['email'] ?? ''))]);
         $user = $query->fetch();
 
+        // On accepte uniquement un compte actif avec le bon mot de passe.
         if (!$user || $user['status'] !== 'active' || !password_verify($_POST['password'] ?? '', $user['password_hash'])) {
             $this->flash('Email or password is incorrect.', 'error');
             $this->redirect('signin');
         }
 
+        // On garde les informations utiles dans la session pour les prochaines pages.
         session_regenerate_id(true);
         $_SESSION['user'] = [
             'id' => (int) $user['id'],
@@ -53,6 +56,7 @@ class AuthController extends Controller
     // Cette methode cree un compte et son profil associe.
     public function register(string $role): void
     {
+        // Les formulaires candidat et entreprise utilisent des champs de nom differents.
         $name = trim($_POST['full_name'] ?? $_POST['company_name'] ?? '');
         $email = strtolower(trim($_POST['email'] ?? ''));
         $password = $_POST['password'] ?? '';
@@ -66,6 +70,7 @@ class AuthController extends Controller
             $this->redirect('register-' . $role);
         }
 
+        // On retrouve l'identifiant du role a partir de son nom.
         $db = Database::connection();
         $query = $db->prepare('SELECT id FROM roles WHERE name = ?');
         $query->execute([$role]);
@@ -74,6 +79,7 @@ class AuthController extends Controller
         // On cree le compte et son profil ensemble, pour eviter un compte incomplet.
         try {
             $db->beginTransaction();
+            // Le mot de passe est transforme avant d'etre enregistre.
             $query = $db->prepare(
                 "INSERT INTO users (role_id, full_name, email, password_hash, status)
                 VALUES (?, ?, ?, ?, 'active')"
@@ -81,6 +87,7 @@ class AuthController extends Controller
             $query->execute([$roleId, $name, $email, password_hash($password, PASSWORD_DEFAULT)]);
             $userId = (int) $db->lastInsertId();
 
+            // Chaque type de compte a ses propres informations de profil.
             if ($role === 'candidate') {
                 $db->prepare('INSERT INTO candidate_profiles (user_id) VALUES (?)')->execute([$userId]);
                 $db->prepare('INSERT INTO user_profiles (user_id) VALUES (?)')->execute([$userId]);
@@ -103,6 +110,7 @@ class AuthController extends Controller
             }
             $db->commit();
         } catch (PDOException $error) {
+            // Une adresse courriel deja utilisee est signalee simplement au formulaire.
             $db->rollBack();
             if ($error->getCode() === '23000') {
                 $this->flash('An account already uses this email.', 'error');
