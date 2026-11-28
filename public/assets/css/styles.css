@@ -379,6 +379,131 @@ th { background: var(--surface-muted); color: var(--text-secondary); font-size: 
 .legal-copy h2 { margin: 28px 0 8px; font-size: 1.25rem; }
 .legal-copy h2:first-child { margin-top: 0; }
 .legal-copy p { color: var(--text-secondary); }
+
+.about-hero {
+    padding: 76px 0 52px;
+    background:
+        radial-gradient(circle at 85% 20%, rgba(219,234,254,.9), transparent 28%),
+        linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+}
+.about-hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 48px;
+}
+.about-hero-copy h1 {
+    max-width: 720px;
+    margin: 8px 0 20px;
+    font-size: clamp(2.7rem, 5vw, 4.6rem);
+    line-height: 1.02;
+    letter-spacing: -0.055em;
+}
+.about-hero-copy p {
+    max-width: 580px;
+    margin: 0 0 28px;
+    color: var(--text-secondary);
+    font-size: 1.12rem;
+    line-height: 1.75;
+}
+.about-hero-image img {
+    width: 100%;
+    filter: drop-shadow(0 24px 38px rgba(37,99,235,.10));
+}
+.about-story {
+    display: grid;
+    grid-template-columns: 70px 1fr 1fr;
+    align-items: start;
+    gap: 28px;
+    padding: 8px 0 52px;
+    border-bottom: 1px solid var(--border);
+}
+.about-story-mark {
+    color: var(--brand-600);
+    font-size: 1.15rem;
+    font-weight: 800;
+}
+.about-story h2 {
+    max-width: 520px;
+}
+.about-story p {
+    margin: 0;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    font-size: 1.05rem;
+}
+.about-path {
+    background: #f7f9fd;
+}
+.about-section-lead {
+    max-width: 420px;
+    margin: 0;
+    line-height: 1.7;
+}
+.about-path-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+.about-path-card {
+    overflow: hidden;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    box-shadow: var(--shadow-soft);
+}
+.about-path-card img {
+    width: 100%;
+    aspect-ratio: 520 / 420;
+    object-fit: cover;
+    background: #eef4ff;
+}
+.about-path-content {
+    padding: 28px;
+}
+.about-path-content h3 {
+    margin: 16px 0 10px;
+    font-size: 1.45rem;
+}
+.about-path-content p {
+    margin: 0;
+    color: var(--text-secondary);
+    line-height: 1.7;
+}
+.about-values {
+    display: grid;
+    grid-template-columns: .75fr 1.25fr;
+    gap: 56px;
+}
+.about-values-heading h2 {
+    max-width: 430px;
+}
+.about-values-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+.about-values-grid article {
+    min-height: 220px;
+    padding: 22px;
+    border-top: 2px solid var(--border);
+}
+.about-value-number {
+    color: var(--brand-600);
+    font-weight: 800;
+}
+.about-values-grid h3 {
+    margin: 42px 0 10px;
+}
+.about-values-grid p {
+    margin: 0;
+    color: var(--text-secondary);
+    line-height: 1.65;
+}
+.about-cta h2 {
+    color: white;
+    max-width: 640px;
+}
 button:disabled { cursor: not-allowed; opacity: .6; }
 label { display: grid; gap: 7px; color: var(--text-primary); font-size: .92rem; font-weight: 600; }
 .checkbox-row { display: flex; align-items: center; font-weight: 400; }
@@ -389,6 +514,10 @@ label { display: grid; gap: 7px; color: var(--text-primary); font-size: .92rem; 
     .app-shell { grid-template-columns: 1fr; }
     .sidebar { border-right: none; border-bottom: 1px solid var(--border); }
     .sidebar-nav { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+    .about-hero-grid { grid-template-columns: 1fr 1fr; gap: 24px; }
+    .about-story { grid-template-columns: 50px 1fr; }
+    .about-story p { grid-column: 2; }
+    .about-values { grid-template-columns: 1fr; gap: 24px; }
 }
 
 @media (max-width: 720px) {
@@ -401,4 +530,13 @@ label { display: grid; gap: 7px; color: var(--text-primary); font-size: .92rem; 
     .metrics-grid { grid-template-columns: 1fr 1fr; }
     .topbar { align-items: flex-start; flex-direction: column; }
     .inline-form { align-items: stretch; flex-direction: column; }
+    .about-hero { padding-top: 48px; }
+    .about-hero-grid, .about-path-grid { grid-template-columns: 1fr; }
+    .about-hero-copy h1 { font-size: clamp(2.3rem, 12vw, 3.4rem); }
+    .about-story { grid-template-columns: 42px 1fr; gap: 18px; }
+    .about-story h2 { font-size: 1.8rem; }
+    .about-section-lead { margin-top: 12px; }
+    .about-values-grid { grid-template-columns: 1fr; }
+    .about-values-grid article { min-height: auto; }
+    .about-values-grid h3 { margin-top: 24px; }
 }
