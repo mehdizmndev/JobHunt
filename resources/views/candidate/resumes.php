@@ -19,14 +19,14 @@
                 <div class="list-stack">
                     <?php foreach ($resumes as $resume): ?>
                         <div class="notification-item">
-                            <div><strong><?php echo htmlspecialchars($resume['file_name']); ?></strong><br><span class="muted">Uploaded <?php echo htmlspecialchars(date('M j, Y', strtotime($resume['created_at']))); ?><?php echo $resume['is_primary'] ? ' · Primary resume' : ''; ?></span></div>
+                            <div><strong><?php echo h($resume['file_name']); ?></strong><br><span class="muted">Uploaded <?php echo h(date('M j, Y', strtotime($resume['created_at']))); ?><?php echo $resume['is_primary'] ? ' · Primary resume' : ''; ?></span></div>
                             <a class="btn btn-secondary" href="index.php?page=resume-download&amp;id=<?php echo (int) $resume['id']; ?>">Download</a>
                         </div>
                     <?php endforeach; ?>
                     <?php if (!$resumes): ?><p class="muted">No resumes uploaded yet.</p><?php endif; ?>
                 </div>
                 <form class="form-stack" method="post" action="index.php?page=candidate-resumes" enctype="multipart/form-data" style="margin-top:24px;">
-                    <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrf_token); ?>" />
+                    <input type="hidden" name="csrf_token" value="<?php echo h($csrf_token); ?>" />
                     <label>Upload a resume (PDF, DOC, or DOCX; max 5 MB)
                         <input class="input" type="file" name="resume" accept=".pdf,.doc,.docx" required />
                     </label>

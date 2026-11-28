@@ -8,10 +8,10 @@
         <div class="grid-4">
             <?php foreach ($companies as $company): ?>
                 <div class="card company-card">
-                    <div class="company-logo"><?php echo htmlspecialchars(strtoupper(substr($company['name'], 0, 2))); ?></div>
-                    <h3><?php echo htmlspecialchars($company['name']); ?></h3>
-                    <p class="muted"><?php echo htmlspecialchars($company['industry']); ?></p>
-                    <p class="muted"><?php echo htmlspecialchars($company['location']); ?></p>
+                    <div class="company-logo"><?php echo h(strtoupper(substr($company['name'], 0, 2))); ?></div>
+                    <h3><?php echo h($company['name']); ?></h3>
+                    <p class="muted"><?php echo h($company['industry']); ?></p>
+                    <p class="muted"><?php echo h($company['location']); ?></p>
                     <a class="btn btn-secondary" href="index.php?page=company-profile&amp;id=<?php echo (int) $company['id']; ?>">View profile</a>
                 </div>
             <?php endforeach; ?>

@@ -22,13 +22,13 @@
                         <tbody>
                             <?php foreach ($jobs as $job): ?>
                                 <tr>
-                                    <td><?php echo htmlspecialchars($job['title']); ?></td>
-                                    <td><?php echo htmlspecialchars($job['location']); ?></td>
+                                    <td><?php echo h($job['title']); ?></td>
+                                    <td><?php echo h($job['location']); ?></td>
                                     <td><?php echo (int) $job['applicant_count']; ?></td>
-                                    <td><span class="status-pill status-<?php echo htmlspecialchars($job['status']); ?>"><?php echo htmlspecialchars(ucwords(str_replace('_', ' ', $job['status']))); ?></span></td>
+                                    <td><span class="status-pill status-<?php echo h($job['status']); ?>"><?php echo h(ucwords(str_replace('_', ' ', $job['status']))); ?></span></td>
                                     <td>
                                         <form method="post" action="index.php?page=company-jobs" class="inline-form">
-                                            <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrf_token); ?>" />
+                                            <input type="hidden" name="csrf_token" value="<?php echo h($csrf_token); ?>" />
                                             <input type="hidden" name="job_id" value="<?php echo (int) $job['id']; ?>" />
                                             <select class="select" name="status" aria-label="Job status">
                                                 <?php foreach (['active', 'paused', 'closed'] as $status): ?>

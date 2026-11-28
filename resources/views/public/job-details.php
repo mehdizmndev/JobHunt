@@ -2,26 +2,26 @@
 <main class="section">
     <div class="container two-col">
         <article class="card">
-            <div class="company-badge"><span class="company-logo" style="width:48px;height:48px;">N</span><strong><?php echo htmlspecialchars($job['company']); ?></strong></div>
-            <h1 style="margin-top:18px; margin-bottom:10px; font-size:2rem; "><?php echo htmlspecialchars($job['title']); ?></h1>
+            <div class="company-badge"><span class="company-logo" style="width:48px;height:48px;">N</span><strong><?php echo h($job['company']); ?></strong></div>
+            <h1 style="margin-top:18px; margin-bottom:10px; font-size:2rem; "><?php echo h($job['title']); ?></h1>
             <div class="job-meta">
-                <span><?php echo htmlspecialchars($job['location']); ?></span>
+                <span><?php echo h($job['location']); ?></span>
                 <span>•</span>
-                <span><?php echo htmlspecialchars($job['type']); ?></span>
+                <span><?php echo h($job['type']); ?></span>
                 <span>•</span>
-                <span><?php echo htmlspecialchars($job['salary']); ?></span>
+                <span><?php echo h($job['salary']); ?></span>
             </div>
             <div class="hero-actions" style="margin: 20px 0;">
                 <?php if (($user['role'] ?? null) === 'candidate'): ?>
                     <form method="post" action="index.php?page=job-details&amp;id=<?php echo (int) $job['id']; ?>">
-                        <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrf_token); ?>" />
+                        <input type="hidden" name="csrf_token" value="<?php echo h($csrf_token); ?>" />
                         <input type="hidden" name="action" value="apply" />
                         <input type="hidden" name="job_id" value="<?php echo (int) $job['id']; ?>" />
                         <label>Attach a resume
                             <select class="select" name="resume_id">
                                 <option value="">No resume attached</option>
                                 <?php foreach ($resumes as $resume): ?>
-                                    <option value="<?php echo (int) $resume['id']; ?>"><?php echo htmlspecialchars($resume['file_name']); ?></option>
+                                    <option value="<?php echo (int) $resume['id']; ?>"><?php echo h($resume['file_name']); ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </label>
@@ -29,7 +29,7 @@
                         <button class="btn btn-primary" type="submit">Apply now</button>
                     </form>
                     <form method="post" action="index.php?page=job-details&amp;id=<?php echo (int) $job['id']; ?>">
-                        <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrf_token); ?>" />
+                        <input type="hidden" name="csrf_token" value="<?php echo h($csrf_token); ?>" />
                         <input type="hidden" name="action" value="save-job" />
                         <input type="hidden" name="job_id" value="<?php echo (int) $job['id']; ?>" />
                         <button class="btn btn-secondary" type="submit">Save job</button>
@@ -40,12 +40,12 @@
             </div>
             <div>
                 <h3>Overview</h3>
-                <p class="muted"><?php echo htmlspecialchars($job['tagline']); ?></p>
+                <p class="muted"><?php echo h($job['tagline']); ?></p>
                 <h3>Responsibilities</h3>
-                <p class="muted"><?php echo nl2br(htmlspecialchars($job['responsibilities'] ?: 'The hiring team has not added responsibilities yet.')); ?></p>
+                <p class="muted"><?php echo nl2br(h($job['responsibilities'] ?: 'The hiring team has not added responsibilities yet.')); ?></p>
                 <h3>Qualifications</h3>
-                <p class="muted"><?php echo nl2br(htmlspecialchars($job['requirements'] ?: 'The hiring team has not added requirements yet.')); ?></p>
-                <?php if ($job['benefits']): ?><h3>Benefits</h3><p class="muted"><?php echo nl2br(htmlspecialchars($job['benefits'])); ?></p><?php endif; ?>
+                <p class="muted"><?php echo nl2br(h($job['requirements'] ?: 'The hiring team has not added requirements yet.')); ?></p>
+                <?php if ($job['benefits']): ?><h3>Benefits</h3><p class="muted"><?php echo nl2br(h($job['benefits'])); ?></p><?php endif; ?>
             </div>
         </article>
         <aside class="card">

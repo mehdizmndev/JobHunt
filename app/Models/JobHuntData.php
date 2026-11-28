@@ -1,4 +1,5 @@
 <?php
+// Ce fichier lit les informations utiles depuis la base de donnees.
 
 namespace App\Models;
 

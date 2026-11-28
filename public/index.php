@@ -1,4 +1,5 @@
 <?php
+// Ce fichier est le point d entree public ou une ressource PHP.
 
 require dirname(__DIR__) . '/config/app.php';
 require dirname(__DIR__) . '/app/Core/Controller.php';

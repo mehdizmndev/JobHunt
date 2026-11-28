@@ -24,10 +24,10 @@
                         <tbody>
                             <?php foreach ($applications as $item): ?>
                                 <tr>
-                                    <td><?php echo htmlspecialchars($item['company']); ?></td>
-                                    <td><?php echo htmlspecialchars($item['position']); ?></td>
-                                    <td><?php echo htmlspecialchars($item['date']); ?></td>
-                                    <td><span class="status-pill"><?php echo htmlspecialchars(ucwords(str_replace('_', ' ', $item['status']))); ?></span></td>
+                                    <td><?php echo h($item['company']); ?></td>
+                                    <td><?php echo h($item['position']); ?></td>
+                                    <td><?php echo h($item['date']); ?></td>
+                                    <td><span class="status-pill"><?php echo h(ucwords(str_replace('_', ' ', $item['status']))); ?></span></td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>

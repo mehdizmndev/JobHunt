@@ -16,13 +16,13 @@
                 <h1>Create Job Offer</h1>
             </div>
             <form class="card form-stack" method="post" action="index.php?page=company-job-create">
-                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrf_token); ?>" />
+                <input type="hidden" name="csrf_token" value="<?php echo h($csrf_token); ?>" />
                 <label>Job title<input class="input" name="title" placeholder="e.g. Senior Product Designer" required /></label>
                 <div class="form-row">
                     <label>Category<select class="select" name="category" required>
                         <option value="">Select a category</option>
                         <?php foreach ($categories as $category): ?>
-                            <option value="<?php echo htmlspecialchars($category['name']); ?>"><?php echo htmlspecialchars($category['name']); ?></option>
+                            <option value="<?php echo h($category['name']); ?>"><?php echo h($category['name']); ?></option>
                         <?php endforeach; ?>
                     </select></label>
                     <label>Location<input class="input" name="location" placeholder="Remote or city" required /></label>

@@ -22,16 +22,16 @@
                         <tbody>
                             <?php foreach ($candidates as $candidate): ?>
                                 <tr>
-                                    <td><?php echo htmlspecialchars($candidate['name']); ?></td>
-                                    <td><?php echo htmlspecialchars($candidate['role']); ?></td>
-                                    <td><?php echo htmlspecialchars(ucwords(str_replace('_', ' ', $candidate['status']))); ?></td>
+                                    <td><?php echo h($candidate['name']); ?></td>
+                                    <td><?php echo h($candidate['role']); ?></td>
+                                    <td><?php echo h(ucwords(str_replace('_', ' ', $candidate['status']))); ?></td>
                                     <td>
                                         <form method="post" action="index.php?page=company-candidates" class="inline-form">
-                                            <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrf_token); ?>" />
+                                            <input type="hidden" name="csrf_token" value="<?php echo h($csrf_token); ?>" />
                                             <input type="hidden" name="application_id" value="<?php echo (int) $candidate['id']; ?>" />
                                             <select class="select" name="status" aria-label="Application status">
                                                 <?php foreach (['under_review', 'shortlisted', 'interview', 'accepted', 'rejected'] as $status): ?>
-                                                    <option value="<?php echo $status; ?>" <?php echo $candidate['status'] === $status ? 'selected' : ''; ?>><?php echo htmlspecialchars(ucwords(str_replace('_', ' ', $status))); ?></option>
+                                                    <option value="<?php echo $status; ?>" <?php echo $candidate['status'] === $status ? 'selected' : ''; ?>><?php echo h(ucwords(str_replace('_', ' ', $status))); ?></option>
                                                 <?php endforeach; ?>
                                             </select>
                                             <button class="btn btn-secondary" type="submit">Save</button>

@@ -1,4 +1,5 @@
 <?php
+// Ce fichier verifie automatiquement une partie essentielle de l installation.
 
 require dirname(__DIR__) . '/config/app.php';
 require dirname(__DIR__) . '/app/Core/Database.php';

@@ -1,4 +1,5 @@
 <?php
+// Ce fichier fournit une fonction centrale reutilisee par JobHunt.
 
 namespace App\Core;
 
@@ -46,10 +47,10 @@ class Controller
         unset($_SESSION['flash']);
 
         if (str_starts_with($view, 'public.')) {
-            $title = htmlspecialchars($data['page_title'] ?? 'JobHunt · Find your next opportunity', ENT_QUOTES, 'UTF-8');
+            $title = h($data['page_title'] ?? 'JobHunt · Find your next opportunity', ENT_QUOTES, 'UTF-8');
             echo '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>' . $title . '</title><link rel="stylesheet" href="assets/css/styles.css"></head><body>';
             if ($flash_message) {
-                echo '<div class="container"><div class="notice notice-' . htmlspecialchars($flash_message['type'], ENT_QUOTES, 'UTF-8') . '">' . htmlspecialchars($flash_message['message'], ENT_QUOTES, 'UTF-8') . '</div></div>';
+                echo '<div class="container"><div class="notice notice-' . h($flash_message['type'], ENT_QUOTES, 'UTF-8') . '">' . h($flash_message['message'], ENT_QUOTES, 'UTF-8') . '</div></div>';
             }
             require $viewPath;
             echo '<script src="assets/js/app.js"></script></body></html>';
@@ -60,7 +61,7 @@ class Controller
         require $viewPath;
         $html = ob_get_clean();
         if ($flash_message && strpos($html, '<body>') !== false) {
-            $notice = '<div class="container"><div class="notice notice-' . htmlspecialchars($flash_message['type'], ENT_QUOTES, 'UTF-8') . '">' . htmlspecialchars($flash_message['message'], ENT_QUOTES, 'UTF-8') . '</div></div>';
+            $notice = '<div class="container"><div class="notice notice-' . h($flash_message['type'], ENT_QUOTES, 'UTF-8') . '">' . h($flash_message['message'], ENT_QUOTES, 'UTF-8') . '</div></div>';
             $html = preg_replace('/<body>/', '<body>' . $notice, $html, 1);
         }
         echo $html;

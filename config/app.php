@@ -1,8 +1,16 @@
 <?php
+// Ce fichier contient la configuration simple de JobHunt.
 
 // Charge simplement les variables du fichier .env lorsqu'elles existent.
 // Cette methode reste volontairement legere pour garder le projet facile a comprendre.
 $envFile = dirname(__DIR__) . '/.env';
+
+// Cette fonction echappe les informations avant leur affichage dans une page HTML.
+function h($value, int $flags = ENT_QUOTES, string $encoding = 'UTF-8'): string
+{
+    return htmlentities((string) $value, $flags, $encoding);
+}
+
 if (is_file($envFile)) {
     foreach (file($envFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $line) {
         $line = trim($line);

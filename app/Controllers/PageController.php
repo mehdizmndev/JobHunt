@@ -1,4 +1,5 @@
 <?php
+// Ce fichier gere les actions, les formulaires et les redirections.
 
 namespace App\Controllers;
 
@@ -78,12 +79,6 @@ class PageController extends Controller
             case 'register-company':
                 $this->render('auth.company-register');
                 break;
-            case 'forgot-password':
-                $this->render('auth.forgot-password');
-                break;
-            case 'reset-password':
-                $this->render('auth.reset-password', ['token' => $_GET['token'] ?? '']);
-                break;
             case 'unauthorized':
                 $this->render('auth.unauthorized');
                 break;
@@ -155,12 +150,6 @@ class PageController extends Controller
                 break;
             case 'register-company':
                 $this->register('company');
-                break;
-            case 'forgot-password':
-                $this->requestPasswordReset();
-                break;
-            case 'reset-password':
-                $this->resetPassword();
                 break;
             case 'job-details':
                 if (($_POST['action'] ?? '') === 'apply') {
@@ -246,64 +235,6 @@ class PageController extends Controller
             'role' => $user['role'],
         ];
         $this->redirect($user['role'] . '-dashboard');
-    }
-
-    private function requestPasswordReset(): void
-    {
-        $email = strtolower(trim($_POST['email'] ?? ''));
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $this->flash('Enter a valid email address.', 'error');
-            $this->redirect('forgot-password');
-        }
-
-        $db = Database::connection();
-        $query = $db->prepare("SELECT id FROM users WHERE email = ? AND status = 'active'");
-        $query->execute([$email]);
-        $userId = $query->fetchColumn();
-        if ($userId) {
-            $token = bin2hex(random_bytes(32));
-            $query = $db->prepare(
-                'INSERT INTO password_reset_tokens (user_id, token_hash, expires_at)
-                 VALUES (?, ?, DATE_ADD(NOW(), INTERVAL 1 HOUR))
-                 ON DUPLICATE KEY UPDATE token_hash = VALUES(token_hash), expires_at = VALUES(expires_at)'
-            );
-            $query->execute([$userId, hash('sha256', $token)]);
-            $url = 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['SCRIPT_NAME'])
-                . '/index.php?page=reset-password&token=' . urlencode($token);
-            if (!mail($email, 'Reset your JobHunt password', "Open this link to reset your password:\n\n" . $url)) {
-                $this->flash('The reset email could not be sent. Check the mail settings in XAMPP.', 'error');
-                $this->redirect('forgot-password');
-            }
-        }
-
-        $this->flash('If the account exists, a reset link has been sent.');
-        $this->redirect('signin');
-    }
-
-    private function resetPassword(): void
-    {
-        $password = $_POST['password'] ?? '';
-        if (\strlen($password) < 10 || $password !== ($_POST['password_confirmation'] ?? '')) {
-            $this->flash('Enter matching passwords with at least 10 characters.', 'error');
-            $this->redirect('reset-password', ['token' => $_POST['token'] ?? '']);
-        }
-
-        $db = Database::connection();
-        $query = $db->prepare(
-            'SELECT user_id FROM password_reset_tokens WHERE token_hash = ? AND expires_at > NOW()'
-        );
-        $query->execute([hash('sha256', $_POST['token'] ?? '')]);
-        $userId = $query->fetchColumn();
-        if (!$userId) {
-            $this->flash('This password reset link is invalid or expired.', 'error');
-            $this->redirect('forgot-password');
-        }
-
-        $db->prepare('UPDATE users SET password_hash = ? WHERE id = ?')
-            ->execute([password_hash($password, PASSWORD_DEFAULT), $userId]);
-        $db->prepare('DELETE FROM password_reset_tokens WHERE user_id = ?')->execute([$userId]);
-        $this->flash('Password updated. You can now sign in.');
-        $this->redirect('signin');
     }
 
     private function register(string $role): void

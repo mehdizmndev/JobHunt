@@ -5,7 +5,7 @@ JobHunt est une application PHP de recherche d'emploi et de recrutement. Elle co
 ## Fonctionnalites principales
 
 - Recherche et filtrage des offres d'emploi.
-- Inscription, connexion, deconnexion et reinitialisation de mot de passe.
+- Inscription, connexion et deconnexion.
 - Profils candidats, CV PDF/DOC/DOCX et candidatures.
 - Offres en favoris et suivi des candidatures.
 - Espace entreprise pour publier des offres et traiter les candidatures.
@@ -168,10 +168,6 @@ Verifier la base, les comptes et les offres apres l'import :
 - Activez l'affichage des erreurs dans PHP uniquement en environnement local.
 - Consultez `C:\xampp\apache\logs\error.log` et `C:\xampp\php\logs\php_error_log`.
 - Verifiez que PHP est en version 8.2 ou superieure.
-
-### Reinitialisation de mot de passe
-
-La reinitialisation utilise `mail()`. Pour un test local, configurez un serveur SMTP et PHP mail dans XAMPP ou utilisez un compte de test pour mettre a jour son mot de passe depuis une base locale.
 
 ### Impossible d'importer le fichier SQL
 

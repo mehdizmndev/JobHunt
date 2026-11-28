@@ -17,20 +17,20 @@
                 <p class="muted">Help candidates understand your organization and workplace.</p>
             </div>
             <form class="card form-stack" method="post" action="index.php?page=company-profile-edit">
-                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrf_token); ?>" />
+                <input type="hidden" name="csrf_token" value="<?php echo h($csrf_token); ?>" />
                 <div class="form-row">
-                    <label>Company name<input class="input" name="company_name" value="<?php echo htmlspecialchars($profile['company_name'] ?? ''); ?>" required /></label>
-                    <label>Industry<input class="input" name="industry" value="<?php echo htmlspecialchars($profile['industry'] ?? ''); ?>" /></label>
+                    <label>Company name<input class="input" name="company_name" value="<?php echo h($profile['company_name'] ?? ''); ?>" required /></label>
+                    <label>Industry<input class="input" name="industry" value="<?php echo h($profile['industry'] ?? ''); ?>" /></label>
                 </div>
                 <div class="form-row">
-                    <label>Company size<input class="input" name="company_size" value="<?php echo htmlspecialchars($profile['company_size'] ?? ''); ?>" placeholder="e.g. 51-200" /></label>
-                    <label>Founded year<input class="input" type="number" name="founded_year" min="1800" max="<?php echo date('Y'); ?>" value="<?php echo htmlspecialchars($profile['founded_year'] ?? ''); ?>" /></label>
+                    <label>Company size<input class="input" name="company_size" value="<?php echo h($profile['company_size'] ?? ''); ?>" placeholder="e.g. 51-200" /></label>
+                    <label>Founded year<input class="input" type="number" name="founded_year" min="1800" max="<?php echo date('Y'); ?>" value="<?php echo h($profile['founded_year'] ?? ''); ?>" /></label>
                 </div>
                 <div class="form-row">
-                    <label>Location<input class="input" name="location" value="<?php echo htmlspecialchars($profile['location'] ?? ''); ?>" /></label>
-                    <label>Website<input class="input" type="url" name="website" value="<?php echo htmlspecialchars($profile['website'] ?? ''); ?>" placeholder="https://" /></label>
+                    <label>Location<input class="input" name="location" value="<?php echo h($profile['location'] ?? ''); ?>" /></label>
+                    <label>Website<input class="input" type="url" name="website" value="<?php echo h($profile['website'] ?? ''); ?>" placeholder="https://" /></label>
                 </div>
-                <label>About your company<textarea class="textarea" name="description" rows="6"><?php echo htmlspecialchars($profile['description'] ?? ''); ?></textarea></label>
+                <label>About your company<textarea class="textarea" name="description" rows="6"><?php echo h($profile['description'] ?? ''); ?></textarea></label>
                 <button class="btn btn-primary" type="submit">Save company profile</button>
             </form>
         </main>

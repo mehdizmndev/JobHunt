@@ -19,9 +19,9 @@
             <div class="metrics-grid">
                 <?php foreach ($metrics as $metric): ?>
                     <div class="metric-card">
-                        <div class="label"><?php echo htmlspecialchars($metric['label']); ?></div>
-                        <div class="value"><?php echo htmlspecialchars($metric['value']); ?></div>
-                        <div class="trend"><?php echo htmlspecialchars($metric['trend']); ?></div>
+                        <div class="label"><?php echo h($metric['label']); ?></div>
+                        <div class="value"><?php echo h($metric['value']); ?></div>
+                        <div class="trend"><?php echo h($metric['trend']); ?></div>
                     </div>
                 <?php endforeach; ?>
             </div>
@@ -34,9 +34,9 @@
                             <tbody>
                                 <?php foreach ($users as $user): ?>
                                     <tr>
-                                        <td><?php echo htmlspecialchars($user['name']); ?></td>
-                                        <td><?php echo htmlspecialchars($user['email']); ?></td>
-                                        <td><?php echo htmlspecialchars($user['type']); ?></td>
+                                        <td><?php echo h($user['name']); ?></td>
+                                        <td><?php echo h($user['email']); ?></td>
+                                        <td><?php echo h($user['type']); ?></td>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
@@ -47,7 +47,7 @@
                     <h3>Recently published jobs</h3>
                     <div class="list-stack">
                         <?php foreach (array_slice($jobs, 0, 5) as $job): ?>
-                            <div class="notification-item"><div><strong><?php echo htmlspecialchars($job['title']); ?></strong><br><span class="muted"><?php echo htmlspecialchars($job['company']); ?></span></div><a class="inline-link" href="index.php?page=job-details&amp;id=<?php echo (int) $job['id']; ?>">View</a></div>
+                            <div class="notification-item"><div><strong><?php echo h($job['title']); ?></strong><br><span class="muted"><?php echo h($job['company']); ?></span></div><a class="inline-link" href="index.php?page=job-details&amp;id=<?php echo (int) $job['id']; ?>">View</a></div>
                         <?php endforeach; ?>
                         <?php if (!$jobs): ?><p class="muted">No active job offers yet.</p><?php endif; ?>
                     </div>
@@ -61,11 +61,11 @@
                         <?php foreach ($messages as $message): ?>
                             <article class="notification-item">
                                 <div>
-                                    <strong><?php echo htmlspecialchars($message['full_name']); ?></strong>
-                                    · <a class="inline-link" href="mailto:<?php echo htmlspecialchars($message['email']); ?>"><?php echo htmlspecialchars($message['email']); ?></a>
-                                    <p><?php echo nl2br(htmlspecialchars($message['message'])); ?></p>
+                                    <strong><?php echo h($message['full_name']); ?></strong>
+                                    · <a class="inline-link" href="mailto:<?php echo h($message['email']); ?>"><?php echo h($message['email']); ?></a>
+                                    <p><?php echo nl2br(h($message['message'])); ?></p>
                                 </div>
-                                <span class="help-text"><?php echo htmlspecialchars(date('M j, Y H:i', strtotime($message['created_at']))); ?></span>
+                                <span class="help-text"><?php echo h(date('M j, Y H:i', strtotime($message['created_at']))); ?></span>
                             </article>
                         <?php endforeach; ?>
                     </div>

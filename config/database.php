@@ -1,4 +1,5 @@
 <?php
+// Ce fichier contient la configuration simple de JobHunt.
 
 $getValue = static function (string $name, $default) {
     $value = getenv($name);

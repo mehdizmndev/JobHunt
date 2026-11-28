@@ -6,7 +6,7 @@
             <h1>Send us a message</h1>
             <p class="muted">Questions or need help? Send a message and our JobHunt administrators will see it in their dashboard.</p>
             <form class="form-stack" method="post" action="index.php?page=contact">
-                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrf_token); ?>" />
+                <input type="hidden" name="csrf_token" value="<?php echo h($csrf_token); ?>" />
                 <label>Your name<input class="input" name="full_name" autocomplete="name" required /></label>
                 <label>Email address<input class="input" type="email" name="email" autocomplete="email" required /></label>
                 <label>How can we help?<textarea class="textarea" name="message" rows="5" required></textarea></label>

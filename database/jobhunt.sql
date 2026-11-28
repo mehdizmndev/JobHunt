@@ -1,3 +1,4 @@
+-- Ce fichier recree la base complete de JobHunt avec ses tables et ses donnees de demonstration.
 DROP DATABASE IF EXISTS jobhunt;
 CREATE DATABASE jobhunt CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE jobhunt;
@@ -466,10 +467,3 @@ CREATE TABLE IF NOT EXISTS contact_messages (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE TABLE IF NOT EXISTS password_reset_tokens (
-    user_id INT PRIMARY KEY,
-    token_hash CHAR(64) NOT NULL,
-    expires_at DATETIME NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT fk_reset_token_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

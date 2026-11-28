@@ -12,7 +12,7 @@
             <div class="kicker">Company</div>
             <h1>Register your team</h1>
             <form class="form-stack" method="post" action="index.php?page=register-company">
-                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrf_token); ?>" />
+                <input type="hidden" name="csrf_token" value="<?php echo h($csrf_token); ?>" />
                 <label>Company name<input class="input" name="company_name" autocomplete="organization" placeholder="Your company name" required /></label>
                 <label>Work email<input class="input" type="email" name="email" autocomplete="email" placeholder="you@company.com" required /></label>
                 <div class="form-row">

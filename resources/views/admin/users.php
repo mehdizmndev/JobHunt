@@ -22,14 +22,14 @@
                         <tbody>
                             <?php foreach ($users as $user): ?>
                                 <tr>
-                                    <td><?php echo htmlspecialchars($user['name']); ?></td>
-                                    <td><?php echo htmlspecialchars($user['email']); ?></td>
-                                    <td><?php echo htmlspecialchars($user['type']); ?></td>
-                                    <td><span class="status-pill"><?php echo htmlspecialchars($user['status']); ?></span></td>
+                                    <td><?php echo h($user['name']); ?></td>
+                                    <td><?php echo h($user['email']); ?></td>
+                                    <td><?php echo h($user['type']); ?></td>
+                                    <td><span class="status-pill"><?php echo h($user['status']); ?></span></td>
                                     <td>
                                         <?php if ((int) $user['id'] !== (int) $_SESSION['user']['id']): ?>
                                             <form method="post" action="index.php?page=admin-users" class="inline-form">
-                                                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrf_token); ?>" />
+                                                <input type="hidden" name="csrf_token" value="<?php echo h($csrf_token); ?>" />
                                                 <input type="hidden" name="user_id" value="<?php echo (int) $user['id']; ?>" />
                                                 <input type="hidden" name="status" value="<?php echo $user['status'] === 'suspended' ? 'active' : 'suspended'; ?>" />
                                                 <button class="btn btn-secondary" type="submit"><?php echo $user['status'] === 'suspended' ? 'Reactivate' : 'Suspend'; ?></button>

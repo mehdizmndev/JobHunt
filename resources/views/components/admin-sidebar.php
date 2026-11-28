@@ -10,7 +10,7 @@
         <a class="nav-item" href="index.php?page=home">View public site</a>
     </div>
     <div style="margin-top:auto; padding-top: 18px; border-top:1px solid var(--border);">
-        <div class="company-badge"><strong><?php echo htmlspecialchars($_SESSION['user']['name'] ?? 'System Admin'); ?></strong></div>
+        <div class="company-badge"><strong><?php echo h($_SESSION['user']['name'] ?? 'System Admin'); ?></strong></div>
         <div class="help-text">Admin Workspace</div>
     </div>
 </aside>

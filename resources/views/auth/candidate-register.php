@@ -12,7 +12,7 @@
             <div class="kicker">Candidate</div>
             <h1>Create your account</h1>
             <form class="form-stack" method="post" action="index.php?page=register-candidate">
-                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrf_token); ?>" />
+                <input type="hidden" name="csrf_token" value="<?php echo h($csrf_token); ?>" />
                 <label>Full name<input class="input" name="full_name" autocomplete="name" placeholder="Your full name" required /></label>
                 <label>Email address<input class="input" type="email" name="email" autocomplete="email" placeholder="you@example.com" required /></label>
                 <label>Password<input class="input" type="password" name="password" autocomplete="new-password" minlength="10" required /></label>

@@ -27,22 +27,22 @@
                 <?php foreach ($jobs as $job): ?>
                     <article class="job-card">
                         <div class="job-top">
-                            <div class="company-badge"><span class="company-logo" style="width:40px;height:40px;">C</span><?php echo htmlspecialchars($job['company']); ?></div>
-                            <span class="badge badge-primary"><?php echo htmlspecialchars($job['workplace']); ?></span>
+                            <div class="company-badge"><span class="company-logo" style="width:40px;height:40px;">C</span><?php echo h($job['company']); ?></div>
+                            <span class="badge badge-primary"><?php echo h($job['workplace']); ?></span>
                         </div>
-                        <h3><?php echo htmlspecialchars($job['title']); ?></h3>
-                        <p class="muted"><?php echo htmlspecialchars($job['tagline']); ?></p>
+                        <h3><?php echo h($job['title']); ?></h3>
+                        <p class="muted"><?php echo h($job['tagline']); ?></p>
                         <div class="job-meta">
-                            <span><?php echo htmlspecialchars($job['location']); ?></span>
-                            <span><?php echo htmlspecialchars($job['salary']); ?></span>
+                            <span><?php echo h($job['location']); ?></span>
+                            <span><?php echo h($job['salary']); ?></span>
                         </div>
                         <div class="skill-list">
                             <?php foreach ($job['skills'] as $skill): ?>
-                                <span class="skill-tag"><?php echo htmlspecialchars($skill); ?></span>
+                                <span class="skill-tag"><?php echo h($skill); ?></span>
                             <?php endforeach; ?>
                         </div>
                         <div class="card-footer">
-                            <span class="muted"><?php echo htmlspecialchars($job['posted']); ?></span>
+                            <span class="muted"><?php echo h($job['posted']); ?></span>
                             <a class="btn btn-primary" href="index.php?page=job-details&amp;id=<?php echo (int) $job['id']; ?>">View job</a>
                         </div>
                     </article>

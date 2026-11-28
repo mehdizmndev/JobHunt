@@ -1,4 +1,5 @@
 <?php
+// Ce fichier fournit une fonction centrale reutilisee par JobHunt.
 
 namespace App\Core;
 

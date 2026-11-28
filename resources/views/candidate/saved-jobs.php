@@ -20,19 +20,19 @@
                 <?php foreach ($jobs as $job): ?>
                     <article class="job-card">
                         <div class="job-top">
-                            <strong><?php echo htmlspecialchars($job['company']); ?></strong>
-                            <span class="badge badge-primary"><?php echo htmlspecialchars($job['workplace']); ?></span>
+                            <strong><?php echo h($job['company']); ?></strong>
+                            <span class="badge badge-primary"><?php echo h($job['workplace']); ?></span>
                         </div>
-                        <h3><?php echo htmlspecialchars($job['title']); ?></h3>
+                        <h3><?php echo h($job['title']); ?></h3>
                         <div class="job-meta">
-                            <span><?php echo htmlspecialchars($job['location']); ?></span>
-                            <span><?php echo htmlspecialchars($job['type']); ?></span>
-                            <span><?php echo $job['salary_min'] && $job['salary_max'] ? htmlspecialchars(number_format($job['salary_min']) . ' - ' . number_format($job['salary_max']) . ' ' . $job['currency']) : 'Salary not disclosed'; ?></span>
+                            <span><?php echo h($job['location']); ?></span>
+                            <span><?php echo h($job['type']); ?></span>
+                            <span><?php echo $job['salary_min'] && $job['salary_max'] ? h(number_format($job['salary_min']) . ' - ' . number_format($job['salary_max']) . ' ' . $job['currency']) : 'Salary not disclosed'; ?></span>
                         </div>
                         <div class="hero-actions" style="margin-top:16px;">
                             <a class="btn btn-primary" href="index.php?page=job-details&amp;id=<?php echo (int) $job['id']; ?>">View job</a>
                             <form method="post" action="index.php?page=candidate-saved">
-                                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrf_token); ?>" />
+                                <input type="hidden" name="csrf_token" value="<?php echo h($csrf_token); ?>" />
                                 <input type="hidden" name="job_id" value="<?php echo (int) $job['id']; ?>" />
                                 <button class="btn btn-secondary" type="submit">Remove</button>
                             </form>

@@ -7,8 +7,8 @@
         </div>
         <form class="card field-row" method="get" action="index.php">
             <input type="hidden" name="page" value="jobs" />
-            <input class="input" name="keyword" placeholder="Job title, skill, or keyword" value="<?php echo htmlspecialchars($filters['keyword'] ?? ''); ?>" />
-            <input class="input" name="location" placeholder="Location" value="<?php echo htmlspecialchars($filters['location'] ?? ''); ?>" />
+            <input class="input" name="keyword" placeholder="Job title, skill, or keyword" value="<?php echo h($filters['keyword'] ?? ''); ?>" />
+            <input class="input" name="location" placeholder="Location" value="<?php echo h($filters['location'] ?? ''); ?>" />
             <button class="btn btn-primary" type="submit">Search</button>
         </form>
         <div class="two-col" style="margin-top:20px;">
@@ -17,22 +17,22 @@
                     <?php foreach ($jobs as $job): ?>
                         <article class="job-card">
                             <div class="job-top">
-                                <div class="company-badge"><span class="company-logo" style="width:38px;height:38px;">A</span><?php echo htmlspecialchars($job['company']); ?></div>
-                                <span class="badge badge-primary"><?php echo htmlspecialchars($job['type']); ?></span>
+                                <div class="company-badge"><span class="company-logo" style="width:38px;height:38px;">A</span><?php echo h($job['company']); ?></div>
+                                <span class="badge badge-primary"><?php echo h($job['type']); ?></span>
                             </div>
-                            <h3><?php echo htmlspecialchars($job['title']); ?></h3>
-                            <p class="muted"><?php echo htmlspecialchars($job['tagline']); ?></p>
+                            <h3><?php echo h($job['title']); ?></h3>
+                            <p class="muted"><?php echo h($job['tagline']); ?></p>
                             <div class="job-meta">
-                                <span><?php echo htmlspecialchars($job['location']); ?></span>
-                                <span><?php echo htmlspecialchars($job['salary']); ?></span>
+                                <span><?php echo h($job['location']); ?></span>
+                                <span><?php echo h($job['salary']); ?></span>
                             </div>
                             <div class="skill-list">
                                 <?php foreach ($job['skills'] as $skill): ?>
-                                    <span class="skill-tag"><?php echo htmlspecialchars($skill); ?></span>
+                                    <span class="skill-tag"><?php echo h($skill); ?></span>
                                 <?php endforeach; ?>
                             </div>
                             <div class="card-footer">
-                                <span class="muted"><?php echo htmlspecialchars($job['posted']); ?></span>
+                                <span class="muted"><?php echo h($job['posted']); ?></span>
                                 <a class="btn btn-primary" href="index.php?page=job-details&amp;id=<?php echo (int) $job['id']; ?>">View job</a>
                             </div>
                         </article>
@@ -46,13 +46,13 @@
                 <h3>Filters</h3>
                 <form class="form-stack" method="get" action="index.php">
                     <input type="hidden" name="page" value="jobs" />
-                    <input type="hidden" name="keyword" value="<?php echo htmlspecialchars($filters['keyword'] ?? ''); ?>" />
-                    <input type="hidden" name="location" value="<?php echo htmlspecialchars($filters['location'] ?? ''); ?>" />
+                    <input type="hidden" name="keyword" value="<?php echo h($filters['keyword'] ?? ''); ?>" />
+                    <input type="hidden" name="location" value="<?php echo h($filters['location'] ?? ''); ?>" />
                     <label>Employment type
                         <select class="select" name="employment_type">
                             <option value="">All employment types</option>
                             <?php foreach (['Full-time', 'Part-time', 'Contract', 'Internship'] as $type): ?>
-                                <option value="<?php echo htmlspecialchars($type); ?>" <?php echo ($filters['employment_type'] ?? '') === $type ? 'selected' : ''; ?>><?php echo htmlspecialchars($type); ?></option>
+                                <option value="<?php echo h($type); ?>" <?php echo ($filters['employment_type'] ?? '') === $type ? 'selected' : ''; ?>><?php echo h($type); ?></option>
                             <?php endforeach; ?>
                         </select>
                     </label>
@@ -60,7 +60,7 @@
                         <select class="select" name="workplace_type">
                             <option value="">Any workplace</option>
                             <?php foreach (['Remote', 'Hybrid', 'On-site'] as $type): ?>
-                                <option value="<?php echo htmlspecialchars($type); ?>" <?php echo ($filters['workplace_type'] ?? '') === $type ? 'selected' : ''; ?>><?php echo htmlspecialchars($type); ?></option>
+                                <option value="<?php echo h($type); ?>" <?php echo ($filters['workplace_type'] ?? '') === $type ? 'selected' : ''; ?>><?php echo h($type); ?></option>
                             <?php endforeach; ?>
                         </select>
                     </label>

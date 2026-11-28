@@ -13,15 +13,15 @@
             <?php require __DIR__ . '/../components/topbar.php'; ?>
             <div class="page-header">
                 <div class="kicker">Candidate workspace</div>
-                <h1>Welcome back, <?php echo htmlspecialchars($_SESSION['user']['name'] ?? 'Candidate'); ?>.</h1>
+                <h1>Welcome back, <?php echo h($_SESSION['user']['name'] ?? 'Candidate'); ?>.</h1>
                 <p class="muted">Here’s an overview of your job search activity.</p>
             </div>
             <div class="metrics-grid">
                 <?php foreach ($metrics as $metric): ?>
                     <div class="metric-card">
-                        <div class="label"><?php echo htmlspecialchars($metric['label']); ?></div>
-                        <div class="value"><?php echo htmlspecialchars($metric['value']); ?></div>
-                        <div class="trend"><?php echo htmlspecialchars($metric['trend']); ?></div>
+                        <div class="label"><?php echo h($metric['label']); ?></div>
+                        <div class="value"><?php echo h($metric['value']); ?></div>
+                        <div class="trend"><?php echo h($metric['trend']); ?></div>
                     </div>
                 <?php endforeach; ?>
             </div>
@@ -37,8 +37,8 @@
                         <?php foreach (array_slice($applications, 0, 3) as $entry): ?>
                             <div class="notification-item">
                                 <div>
-                                    <strong><?php echo htmlspecialchars($entry['position']); ?></strong><br>
-                                    <span class="muted"><?php echo htmlspecialchars($entry['company']); ?></span>
+                                    <strong><?php echo h($entry['position']); ?></strong><br>
+                                    <span class="muted"><?php echo h($entry['company']); ?></span>
                                 </div>
                                 <a class="btn btn-primary" href="index.php?page=job-details&amp;id=<?php echo (int) ($entry['job_id'] ?? 0); ?>">View</a>
                             </div>
@@ -67,9 +67,9 @@
                             <tbody>
                                 <?php foreach ($applications as $app): ?>
                                     <tr>
-                                        <td><?php echo htmlspecialchars($app['company']); ?></td>
-                                        <td><?php echo htmlspecialchars($app['position']); ?></td>
-                                        <td><span class="status-pill"><?php echo htmlspecialchars($app['status']); ?></span></td>
+                                        <td><?php echo h($app['company']); ?></td>
+                                        <td><?php echo h($app['position']); ?></td>
+                                        <td><span class="status-pill"><?php echo h($app['status']); ?></span></td>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
@@ -81,10 +81,10 @@
                     <?php foreach ($notifications as $item): ?>
                         <div class="notification-item">
                             <div>
-                                <strong><?php echo htmlspecialchars($item['title']); ?></strong><br>
-                                <span class="muted"><?php echo htmlspecialchars($item['detail']); ?></span>
+                                <strong><?php echo h($item['title']); ?></strong><br>
+                                <span class="muted"><?php echo h($item['detail']); ?></span>
                             </div>
-                            <span class="muted"><?php echo htmlspecialchars($item['time']); ?></span>
+                            <span class="muted"><?php echo h($item['time']); ?></span>
                         </div>
                     <?php endforeach; ?>
                     <?php if (!$notifications): ?><p class="muted">You’re all caught up. New updates will appear here.</p><?php endif; ?>

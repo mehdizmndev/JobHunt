@@ -21,7 +21,7 @@
                     <div class="list-stack">
                         <?php foreach ($categories as $category): ?>
                             <div class="notification-item">
-                                <div><strong><?php echo htmlspecialchars($category['name']); ?></strong><br><span class="muted"><?php echo htmlspecialchars($category['count']); ?> listings</span></div>
+                                <div><strong><?php echo h($category['name']); ?></strong><br><span class="muted"><?php echo h($category['count']); ?> listings</span></div>
                                 <span class="badge badge-primary"><?php echo (int) $category['count']; ?> jobs</span>
                             </div>
                         <?php endforeach; ?>
@@ -31,14 +31,14 @@
                     <h3>Skills</h3>
                     <div class="skill-list">
                         <?php foreach ($skills as $skill): ?>
-                            <span class="skill-tag"><?php echo htmlspecialchars($skill); ?></span>
+                            <span class="skill-tag"><?php echo h($skill); ?></span>
                         <?php endforeach; ?>
                     </div>
                 </div>
                 <div class="card">
                     <h3>Add a job category</h3>
                     <form class="form-stack" method="post" action="index.php?page=admin-categories">
-                        <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrf_token); ?>" />
+                        <input type="hidden" name="csrf_token" value="<?php echo h($csrf_token); ?>" />
                         <label>Category name<input class="input" name="name" maxlength="100" required /></label>
                         <label>Description<input class="input" name="description" maxlength="255" /></label>
                         <button class="btn btn-primary" type="submit">Add category</button>

@@ -1,4 +1,5 @@
 <?php
+// Ce fichier declare les pages disponibles dans JobHunt.
 
 return [
     'home' => 'public.home',
@@ -15,8 +16,6 @@ return [
     'account-type' => 'auth.choose-account',
     'register-candidate' => 'auth.candidate-register',
     'register-company' => 'auth.company-register',
-    'forgot-password' => 'auth.forgot-password',
-    'reset-password' => 'auth.reset-password',
     'unauthorized' => 'auth.unauthorized',
     'logout' => 'auth.logout',
     'resume-download' => 'candidate.resume-download',
